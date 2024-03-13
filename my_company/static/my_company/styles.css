@@ -1,0 +1,159 @@
+body{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+p::selection{
+    color: #fff;
+    background-color: green;
+}
+
+#background{
+    position: absolute;
+    z-index: -1;
+    width: 100vw;
+    height: 100vh;
+}
+
+#index-body{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#index-header{
+    font-size: 70px;
+}
+
+.cards{
+    width: 300px;
+}
+.card-img img{
+    padding: 0;
+    margin: 0;
+    max-width: 300px;
+    min-width: 300px;
+    max-height: 200px;
+    min-height: 200px;
+}
+
+.card-img{
+    padding: 0;
+    margin: 0;
+    
+    max-width: 300px;
+    min-width: 300px;
+    max-height: 200px;
+    min-height: 200px;
+}
+
+
+#navigation-bar{
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#services-div{
+    display: grid;
+    justify-content: center;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 100px;
+}
+
+
+#employee-title{
+    letter-spacing: 5px;
+    word-spacing: 10px;
+}
+
+
+/*About Page*/
+#about-image{
+    width: 100%;
+    height: auto;
+}
+
+#company-group ,#joint-group{
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+/* responsive */
+@media only screen and (max-width:500px){
+    /* navigation bar */
+    #navigation-bar{
+        display:block;
+        font-size: 12px;
+    }
+    #nav-buttons{
+        margin-top: 10px;
+    }
+    #username{
+        border-radius: 10px!important;
+        font-size: 12px!important;
+    }
+
+    .username{
+        padding: 5px!important;
+    }
+    #admin{
+        padding: 5px!important;
+        background: none!important;
+        border: none!important;
+    }
+
+    /* home */
+    #index-body{
+        display:block;
+    }
+
+    #index-header{
+        font-size: 30px;
+        color: black;
+    }
+    
+    #header{
+        display: flex;
+        justify-content: center;
+        background-color:rgba(0,0,0,0.8);
+    }
+    #index-body img{
+        max-width: 300px;
+    }
+    /* form */
+    #form-div{
+        padding: 0!important;
+    }
+
+    #description{
+        width: 100%;
+    }
+
+    /* services */
+    #services-div{
+        grid-template-columns: 1fr;
+        justify-content: center;
+    }
+
+    #service_body, #services-div{
+        padding: 0!important;
+        margin: 0!important;
+    }
+
+    .cards{
+        width: 95%;
+        padding: 5px;
+    }
+
+    #company-group , #joint-group{
+        grid-template-columns: 1fr;
+    }
+
+}

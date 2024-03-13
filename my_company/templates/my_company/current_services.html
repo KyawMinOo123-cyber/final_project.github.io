@@ -1,0 +1,61 @@
+
+{% extends 'my_company/layout.html' %}
+{% block title %}
+    Current Services
+{% endblock %}
+
+{% block body %}
+    {% csrf_token %}
+    <h1 id="services_page" class="text-center text-warning" style="text-shadow: 1px 1px 1px rgba(0,0,0,0.5);background-color: rgba(0,0,0,0.5);clip-path: polygon(0 0, 100% 0, 76% 100%, 24% 100%);padding:5px;">Current Services</h1>
+    {% if user.is_staff %}
+        <div class="d-flex ms-3 align-items-center justify-content-center">
+            <a id="collapseButton" class="btn btn-primary mt-5 mb-3" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                Create New Service
+            </a>
+        </div>
+        <div class="collapse" id="collapseExample">
+            <div id="form-div" class="d-flex justify-content-center p-3" style="background-color: rgba(0,0,0,0.8);">
+                <form method="POST" enctype="multipart/form-data" class="col-6 text-light" action="{% url 'create_service' %}">
+                    {% csrf_token %}
+                    <label for="id_title">Title:</label>
+                    <input class="form-control" type="text" id="id_title" name="title" required><br>
+                    <label for="description" class="mt-3">Description:</label> <br>
+                    <textarea id="description" name="description" rows="8" class="p-2" cols="85" required></textarea><br>
+                    <label for="image" class="mt-3">Image:</label> <br>
+                    <input class=" mb-3" type="file" id="image" name="image" required><br>
+                    <input type="submit" value="Submit" class="btn btn-primary border border-light">
+                </form>
+            </div>
+        </div>
+    {% endif %}
+    <div id="service_body" class="p-3">
+        {% if services %}
+            <div class="row d-flex justify-content-center" id="service-div-parent">
+                <div class="col col-md-6" id="services-div">
+                    {% for service in services %}
+                    <div class="card cards">
+                        <div class="card-title p-2 d-flex justify-content-between">
+                            {{service.title}}
+                            <p class="btn btn-dark" data-info-id="{{service.id}}">i</p>
+                        </div>
+                        <img src="/media/{{service.image}}" alt="{{service.title}}">
+                        <div class="card-body">
+                            <span><b>Description: </b></span>{{service.description|truncatewords:10}}
+                        </div>
+                        {% if user.is_staff %}
+                            <button class="deleteService btn btn-danger" data-service-id={{service.id}}>Delete</button>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+                </div>
+            </div>
+        {% else %}
+            <div class="mt-5 pt-5 pb-5" style="background-color: rgba(0,0,0,0.8);">
+                <h1 class="text-center text-warning">No Services At The Moment</h1>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
+
+
+

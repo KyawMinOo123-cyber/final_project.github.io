@@ -1,0 +1,22 @@
+{% extends 'my_company/layout.html' %}
+{% load static %}
+
+{% block title %}
+    Home Page
+{% endblock %}
+
+{% block body %}
+    {% if error %}
+        <h1 class="text-center text-danger">{{error}}</h1>
+    {% endif %}
+    
+    <div id="index-body">
+        <img id="fs-logo" src="{% static 'logo.png' %}" alt="Focus Star">
+        <div id="header" class="border-bottom pb-2">
+            <h1 id="index-header" class="d-inline"><span id="it" class="text-light">IT</span> DEPARTMENT</h1>
+        </div>
+    </div>
+    
+{% endblock %}
+
+

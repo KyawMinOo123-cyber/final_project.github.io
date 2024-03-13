@@ -1,0 +1,63 @@
+{% extends 'my_company/layout.html' %}
+{% load static %}
+{% block title %}
+    About
+{% endblock %}
+
+{% block body %}
+    <div id="about-page">
+        <h1 class="text-center mt-5 text-warning">Company History</h1>
+        <div class="row d-flex justify-content-center">
+            <div class="col col-md-8 p-2">
+                <p class="fs-5">We were formed in1974, as Central Myanmar in shipping and barter trading. We also imported diesel and petroleum from Singapore. In 2007, we changed our company name to Focus Star Co., Ltd</p>
+                <img id="about-image" src="{% static 'about.jpg' %}" alt="Focus_Star">
+                <p class="fs-5 mt-2">
+                    In 2012 we entered into a contractual agreement with Japan Tobacco International to be the local partner in manufacturing various JTI brands including Mevius, Winston, Camel and also to be the Exclusive Distributor for Myanmar.
+
+                    Focus Star ventured into automotive repairs business in 2017, bringing the very first specialist and state of the art facility from Singapore, Optima Werkz and started Optima Werkz Yangon.
+
+                    In 2018, Focus Star partnered with two other stake holders and launched Wave Plus purified drinking water.
+
+                    Today, we have more than 500 employees and growing. Our mission is to expand our business and its brands in most effective and efficient ways while being ethical.
+
+                    2012 - JV with Myanmar Japan Tobacco and started manufacturing and distributing JTI Products
+
+                    2018 - Partnered with Plus World Co., Ltd and starting manufacturing and distributing purified drinking water
+                </p>
+                <div id="partners" class="mt-5">
+                    <h2 class="text-warning">Focus Star Group Of Companies</h2>
+                    <div id="company-group">
+                        <a href="https://wavepluswater.com/" target="_blank">
+                            <img src="{% static 'partners/wave-plus.jpg' %}" alt="wave-plus">
+                        </a>
+
+                        <a href="https://www.focusstar.com" target="_blank">
+                            <img src="{% static 'partners/Forever-Group.jpg' %}" alt="Forever-Star">
+                        </a>
+
+                        <a href="https://optimawerkzyangon.com/" target="_blank">
+                            <img src="{% static 'partners/optima.jpg' %}" alt="Optima">
+                        </a>
+
+                        <a href="https://sgiinstitute.com/" target="_blank">
+                            <img src="{% static 'partners/SGI.jpg' %}" alt="SGI">
+                        </a>
+                    </div>
+
+                    <h2 class="text-warning mt-5">Focus Star Joint Venture Companies</h2>
+                    <div id="joint-group">
+                        <a href="https://www.jti.com/" target="_blank">
+                            <img src="{% static 'partners/JTI.jpg' %}" alt="JTI">
+                        </a>
+                        <img src="{% static 'partners/Baho.jpg' %}" alt="Baho">
+                        
+                    </div>
+                </div>
+
+                <h5 class="mt-5 text-center">
+                    Copyright &copy;2024 Focus Star IT Department
+                </h5>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends 'my_company/layout.html' %}
+
+{% block title %}
+Service Form
+{% endblock %}
+{% block body %}
+
+<div style="background-color: rgba(0,0,0,0.5);" class="d-flex justify-content-center p-3">
+    <form method="POST" enctype="multipart/form-data" class="col-6 text-light">
+        {% csrf_token %}
+        <label for="id_title">Title:</label>
+        <input class="form-control" type="text" id="id_title" name="title"><br>
+        <label for="description" class="mt-3">Description:</label> <br>
+        <textarea id="description" name="description" rows="8" class="p-2" cols="85"></textarea><br>
+        <label for="image" class="mt-3">Image:</label> <br>
+        <input class=" mb-3" type="file" id="image" name="image"><br>
+        <button type="submit" class="btn btn-primary border border-light">Submit</button>
+    </form>
+</div>
+{% endblock %}
