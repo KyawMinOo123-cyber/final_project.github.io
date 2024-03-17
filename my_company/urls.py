@@ -17,5 +17,9 @@ urlpatterns = [
     path('user_status',views.user_status,name="user_status"), ##still not used
     path('all_services',views.all_services,name="all_services"),
 
-    path('employees',views.employees,name="employees")
+    path('employees',views.employees,name="employees"),
+    path('career',views.career,name = 'career'),
+    path('create_career',views.create_career,name = 'create_career'),
+    path('career_info/<int:career_id>',views.career_info,name = 'career_info'),
+    path('edit_career/<int:career_id>',views.edit_career,name = 'edit_career')
 ]

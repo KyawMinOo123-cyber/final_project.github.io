@@ -5,7 +5,7 @@ from django.http import HttpResponseRedirect,JsonResponse
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from . models import *
-from .forms import ServiceForm
+from .forms import ServiceForm,CareerForm
 # Create your views here.
 
 
@@ -79,7 +79,7 @@ def user_status(request):
 
 
 def current_services(request):
-    services = Service.objects.all()
+    services = Service.objects.order_by('-timestamp').all()
     return render(request,'my_company/current_services.html',{
         'services':services
     })
@@ -105,8 +105,18 @@ def delete_service(request,service_id):
         return JsonResponse(service.serialize(),safe=False)
 
 
-@login_required
+def career(request):
+    careers = Career.objects.order_by('-timestamp').all()
+    return render(request,'my_company/career.html',{
+        "careers":careers
+    })
 
+def career_info(request,career_id):
+    career = Career.objects.get(pk = career_id)
+    return JsonResponse( career.serialize() , safe = False)
+
+
+@login_required
 
 def create_service(request):
     user = request.user
@@ -128,9 +138,31 @@ def create_service(request):
 
 
 
-
-
+def create_career(request):
+    user = request.user
+    if user.is_staff:
+        if request.method == "POST":
+            form = CareerForm(request.POST)
+            if form.is_valid():
+                form.save()
+                return HttpResponseRedirect(reverse('career'))
+        else:
+            form = CareerForm()
+            
+        return render(request,'my_company/career.html',{
+                "form":form
+        })
+    else:
+        return render(request,'my_company/career.html',{
+            "error": "Permission denied!"
+        })
 
 
 def employees(request):
     return render(request, 'my_company/employees.html')
+
+def edit_career(request,career_id):
+    user = request.user
+    if user.is_staff:
+        career = Career.objects.get(pk= career_id)
+        return JsonResponse(career.serialize(),safe=False)

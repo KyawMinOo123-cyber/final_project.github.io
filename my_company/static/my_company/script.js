@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded',function(){
     const backgroundDiv = document.querySelector('#background-div')
     const employeesPage = document.querySelector('#employee-title')
     const aboutPage = document.querySelector('#about-page')
-
+    const careerPage = document.querySelector('#career-page')
     const navigationBar = document.querySelector('#navigation-bar')
 
    if(servicePage){
@@ -116,6 +116,39 @@ document.addEventListener('DOMContentLoaded',function(){
     navigationBar.style.backgroundColor = "black"
    }
 
+
+   if(careerPage){
+    backgroundDiv.innerHTML = '';
+    navigationBar.style.backgroundColor = "black"
+    const collapseCareerButton = document.querySelector('#collapseCareerButton')
+    const careerInfo = document.querySelectorAll('p')
+    const noCareer = document.querySelector('#no-career')
+    collapseCareerButton.addEventListener('click',function(){
+        if(collapseCareerButton.classList.contains('click')){
+            collapseCareerButton.classList.remove('click')
+            collapseCareerButton.textContent = "Create New Career"
+            if(noCareer){
+                noCareer.style.display = "block"
+            }
+        }else{
+            collapseCareerButton.classList.add('click')
+            collapseCareerButton.textContent = "Cancel"
+            if(noCareer){
+                noCareer.style.display = "none"
+            }
+        }
+    })
+    careerInfo.forEach(button => button.addEventListener('click', function (){
+
+        if(button.classList.contains('click')){
+            button.classList.remove('click')
+            button.textContent = "i"
+        }else{
+            button.classList.add('click')
+            button.textContent = "^"
+        }
+    }))
+   }
 });
 
 
