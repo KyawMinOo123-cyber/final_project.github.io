@@ -165,4 +165,6 @@ def edit_career(request,career_id):
     user = request.user
     if user.is_staff:
         career = Career.objects.get(pk= career_id)
-        return JsonResponse(career.serialize(),safe=False)
+        return render(request,'my_company/editForm.html',{
+            "career":career
+        })

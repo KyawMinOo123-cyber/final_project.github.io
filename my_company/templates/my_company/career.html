@@ -44,7 +44,7 @@ Career
                             <div class="d-flex justify-content-between mt-3">
                                 <form action="{% url 'edit_career' career.id %}" method="POST">
                                     {% csrf_token %}
-                                    <input data-edit-id="{{career.id}}" class="btn btn-primary" type="submit" value="Edit">
+                                    <button data-edit-id="{{career.id}}" class="edit-button btn btn-primary" type="submit">Edit</button>
                                 </form>
                                 <button class="btn btn-danger" data-delete-id="{{career.id}}">Delete</button>
                             </div>

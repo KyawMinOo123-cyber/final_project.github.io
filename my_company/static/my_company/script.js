@@ -118,6 +118,8 @@ document.addEventListener('DOMContentLoaded',function(){
 
 
    if(careerPage){
+    const editButtons = document.querySelectorAll('.edit-button')
+    
     backgroundDiv.innerHTML = '';
     navigationBar.style.backgroundColor = "black"
     const collapseCareerButton = document.querySelector('#collapseCareerButton')
@@ -138,8 +140,8 @@ document.addEventListener('DOMContentLoaded',function(){
             }
         }
     })
-    careerInfo.forEach(button => button.addEventListener('click', function (){
 
+    careerInfo.forEach(button => button.addEventListener('click', function (){
         if(button.classList.contains('click')){
             button.classList.remove('click')
             button.textContent = "i"
@@ -147,12 +149,18 @@ document.addEventListener('DOMContentLoaded',function(){
             button.classList.add('click')
             button.textContent = "^"
         }
+    }));
+    
+    editButtons.forEach(button => button.addEventListener('click',function(){
+        const id = this.getAttribute('data-edit-id')
+        console.log(id)
     }))
+    
    }
 });
 
 
-function getCookie(name) {
+function getToken(name) {
    var cookieValue = null;
    if (document.cookie && document.cookie !== '') {
        var cookies = document.cookie.split(';');
