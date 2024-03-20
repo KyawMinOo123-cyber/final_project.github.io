@@ -6,6 +6,8 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from . models import *
 from .forms import ServiceForm,CareerForm
+from django.utils import timezone
+import json
 # Create your views here.
 
 
@@ -115,6 +117,27 @@ def career_info(request,career_id):
     career = Career.objects.get(pk = career_id)
     return JsonResponse( career.serialize() , safe = False)
 
+def all_careers(request):
+    careers = Career.objects.all()
+    return JsonResponse([career.serialize() for career in careers],safe = False)
+
+
+def delete_career(request,career_id):
+    user = request.user
+    if user.is_authenticated:
+        if user.is_staff:
+            career = Career.objects.get(pk = career_id)
+            career.delete()
+        else:
+             return render(request,'my_company/career.html',{
+            "error":"Permission Denied!!"
+        })
+        
+    else:
+        return render(request,'my_company/career.html',{
+            "error":"Permission Denied!!"
+        })
+
 
 @login_required
 
@@ -168,3 +191,21 @@ def edit_career(request,career_id):
         return render(request,'my_company/editForm.html',{
             "career":career
         })
+
+def update_description(request,description_id):
+    user = request.user
+    try:
+        career = Career.objects.get(pk = description_id)
+    except Career.DoesNotExist:
+        return JsonResponse({'error':"Career Does Not Exist"},status = 404)
+    
+    if user.is_staff:
+        if request.method == "POST":
+            json_data = json.loads(request.body)
+            description = json_data.get('description')
+
+        Career.objects.filter(pk = description_id).update(job_description = description,timestamp = timezone.now())
+        return JsonResponse({'updated_career':career.serialize()})
+
+    else:
+        return JsonResponse({"error":"Permission denied"},status = 403)

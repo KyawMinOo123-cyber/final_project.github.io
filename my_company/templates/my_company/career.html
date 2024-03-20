@@ -5,6 +5,12 @@ Career
 {% endblock %}
 
 {% block body %}
+    {% csrf_token %}
+
+    {% if error %}
+        <h1 class="text-center text-danger">{{error}}</h1>
+    {% endif %}
+
     <h1 id="career-page" class="text-center text-warning">Careers</h1>
     <div id="career-body">
         {% if user.is_staff %}
@@ -46,7 +52,7 @@ Career
                                     {% csrf_token %}
                                     <button data-edit-id="{{career.id}}" class="edit-button btn btn-primary" type="submit">Edit</button>
                                 </form>
-                                <button class="btn btn-danger" data-delete-id="{{career.id}}">Delete</button>
+                                <button class="btn btn-danger delete-button" data-delete-id="{{career.id}}">Delete</button>
                             </div>
                         {% endif %}
                     </div>
@@ -56,9 +62,11 @@ Career
     </div>
         
     {%else%}
-    <h1 id="no-career" class="text-center text-warning" style="background-color: rgba(0,0,0,0.8);">Currently No Careers Avaliable</h1>
+        <h1 id="no-career" class="text-center text-warning" style="background-color: rgba(0,0,0,0.8);">Currently No Careers Avaliable</h1>
     {% endif %}
+
     </div>
 {% endblock %}
+
 
 

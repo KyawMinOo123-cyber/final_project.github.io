@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded',function(){
     const aboutPage = document.querySelector('#about-page')
     const careerPage = document.querySelector('#career-page')
     const navigationBar = document.querySelector('#navigation-bar')
+    const updateButton = document.querySelector('#updateBtn')
 
    if(servicePage){
     const serviceDiv = document.querySelector('#services-div')
@@ -36,14 +37,14 @@ document.addEventListener('DOMContentLoaded',function(){
                 method:'POST',
                 credentials:'same-origin',
                 headers:{
-                    'X-CSRFToken': getCookie('csrftoken'),
+                    'X-CSRFToken': getToken('csrftoken'),
                     'Content-Type': 'application/json'
                 },
             })
             .then(res => {
                 console.log('Service deleted successfully! ')
                 window.location.reload()
-            });
+            })
            
         });
        });
@@ -119,16 +120,20 @@ document.addEventListener('DOMContentLoaded',function(){
 
    if(careerPage){
     const editButtons = document.querySelectorAll('.edit-button')
+    const deleteCareerButtons = document.querySelectorAll('.delete-button') 
     
     backgroundDiv.innerHTML = '';
     navigationBar.style.backgroundColor = "black"
     const collapseCareerButton = document.querySelector('#collapseCareerButton')
     const careerInfo = document.querySelectorAll('p')
     const noCareer = document.querySelector('#no-career')
+    
     collapseCareerButton.addEventListener('click',function(){
         if(collapseCareerButton.classList.contains('click')){
             collapseCareerButton.classList.remove('click')
             collapseCareerButton.textContent = "Create New Career"
+            document.getElementById('id_title').value =""
+            document.getElementById('description').value = ""
             if(noCareer){
                 noCareer.style.display = "block"
             }
@@ -153,11 +158,55 @@ document.addEventListener('DOMContentLoaded',function(){
     
     editButtons.forEach(button => button.addEventListener('click',function(){
         const id = this.getAttribute('data-edit-id')
-        console.log(id)
+        const content = document.getElementById(id).value
     }))
-    
-   }
+
+    deleteCareerButtons.forEach(button => button.addEventListener('click', function (){
+        const careerDeleteId = this.getAttribute('data-delete-id')
+        fetch('all_careers/'+careerDeleteId,{
+            method:"POST",
+            credentials:"same-origin",
+            headers:{
+                "X-CSRFToken":getToken('csrftoken'),
+                "Content-Type":'application/json'
+            }
+        })
+        .then(res => {
+            console.log('Career Deleted Successfully')
+            window.location.reload()
+        })
+        
+    }))
+
+    };
+
+    if(updateButton){
+        updateButton.addEventListener('click',function(){
+            const id = this.getAttribute('data-update-id')
+            const description = document.getElementById(id).value
+            fetch('/update_description/'+id,{
+                method:"POST",
+                credentials:'same-origin',
+                headers:{
+                    'X-CSRFToken': getToken('csrftoken'),
+                    'Content-Type': 'application/json'
+                },
+                body:JSON.stringify({
+                    'description':description
+                })
+            })
+            .then(res=>{
+                return res.json()
+            })
+            .then(data=>{
+                window.location.href = '/career'
+                console.log(data.updated_career.job_description)
+                document.getElementById(id).value = data.updated_career.job_description
+            })
+        })
+       }
 });
+
 
 
 function getToken(name) {

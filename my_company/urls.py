@@ -21,5 +21,8 @@ urlpatterns = [
     path('career',views.career,name = 'career'),
     path('create_career',views.create_career,name = 'create_career'),
     path('career_info/<int:career_id>',views.career_info,name = 'career_info'),
-    path('edit_career/<int:career_id>',views.edit_career,name = 'edit_career')
+    path('edit_career/<int:career_id>',views.edit_career,name = 'edit_career'),
+    path('update_description/<int:description_id>',views.update_description,name = "update_description"),
+    path('all_careers',views.all_careers,name = "all_careers"),
+    path('all_careers/<int:career_id>',views.delete_career,name = "delete_career")
 ]

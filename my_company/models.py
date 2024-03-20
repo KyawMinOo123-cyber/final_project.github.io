@@ -47,7 +47,6 @@ class Employee(models.Model):
     hiring_date = models.DateTimeField(default = timezone.now)
     
 ##Migration still needed
-#
 
 class Service(models.Model):
     title = models.CharField(max_length=100) 
@@ -71,7 +70,6 @@ def delete_service_image(sender, instance, **kwargs):
         # Delete the image file from the file system
         if os.path.isfile(instance.image.path):
             os.remove(instance.image.path)
-
 
 
 class Career(models.Model):
