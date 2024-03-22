@@ -5,10 +5,11 @@ from django.http import HttpResponseRedirect,JsonResponse
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from . models import *
-from .forms import ServiceForm,CareerForm
+from .forms import ServiceForm,CareerForm,JobApplicationForm
 from django.utils import timezone
 import json
 # Create your views here.
+
 
 
 def index(request):
@@ -209,3 +210,37 @@ def update_description(request,description_id):
 
     else:
         return JsonResponse({"error":"Permission denied"},status = 403)
+
+
+def apply_job(request,career_id):
+    user = request.user
+    if user.is_staff:
+        return render(request,'my_company/career.html',{
+            "error":"This user cannot apply for the position!"
+        })
+    else:
+        career = Career.objects.get(pk = career_id)
+        return render(request,"my_company/apply_job_form.html",{
+            "career":career
+        })
+
+
+def job_application(request,career_id):
+    career = Career.objects.get(pk = career_id)
+    user = request.user
+    if user.is_staff:
+        return render(request,'my_company/career.html',{
+            "error":"This user cannot applied for the position!"
+        })
+
+    else:
+        if request.method == "POST":
+            form = JobApplicationForm(request.POST)
+            if form.is_valid():
+                print('valid')
+                return render(request,'my_company/career.html',{
+                })
+            else:
+                print("invalid")
+    
+    return HttpResponseRedirect(reverse('career'))

@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded',function(){
     const careerPage = document.querySelector('#career-page')
     const navigationBar = document.querySelector('#navigation-bar')
     const updateButton = document.querySelector('#updateBtn')
+    const jobApplyForm = document.querySelector('#job-apply-form')
 
    if(servicePage){
     const serviceDiv = document.querySelector('#services-div')
@@ -128,33 +129,39 @@ document.addEventListener('DOMContentLoaded',function(){
     const careerInfo = document.querySelectorAll('p')
     const noCareer = document.querySelector('#no-career')
     
-    collapseCareerButton.addEventListener('click',function(){
-        if(collapseCareerButton.classList.contains('click')){
-            collapseCareerButton.classList.remove('click')
-            collapseCareerButton.textContent = "Create New Career"
-            document.getElementById('id_title').value =""
-            document.getElementById('description').value = ""
-            if(noCareer){
-                noCareer.style.display = "block"
+    if(collapseCareerButton){
+        collapseCareerButton.addEventListener('click',function(){
+            if(collapseCareerButton.classList.contains('click')){
+                collapseCareerButton.classList.remove('click')
+                collapseCareerButton.textContent = "Create New Career"
+                document.getElementById('id_title').value =""
+                document.getElementById('description').value = ""
+                if(noCareer){
+                    noCareer.style.display = "block"
+                }
+            }else{
+                collapseCareerButton.classList.add('click')
+                collapseCareerButton.textContent = "Cancel"
+                if(noCareer){
+                    noCareer.style.display = "none"
+                }
             }
-        }else{
-            collapseCareerButton.classList.add('click')
-            collapseCareerButton.textContent = "Cancel"
-            if(noCareer){
-                noCareer.style.display = "none"
-            }
-        }
-    })
+        })
+    }
 
-    careerInfo.forEach(button => button.addEventListener('click', function (){
-        if(button.classList.contains('click')){
-            button.classList.remove('click')
-            button.textContent = "i"
-        }else{
-            button.classList.add('click')
-            button.textContent = "^"
-        }
-    }));
+    if(careerInfo){
+        careerInfo.forEach(button => button.addEventListener('click',()=>{
+            if(button.classList.contains('click')){
+                button.classList.remove('click')
+                button.textContent = "i"
+                console.log("i")
+            }else{
+                button.classList.add('click')
+                button.textContent = "^"
+                console.log('^')
+            }
+        }));
+    }
     
     editButtons.forEach(button => button.addEventListener('click',function(){
         const id = this.getAttribute('data-edit-id')
@@ -205,6 +212,12 @@ document.addEventListener('DOMContentLoaded',function(){
             })
         })
        }
+
+    if(jobApplyForm){
+        backgroundDiv.innerHTML = ''
+        document.body.style.backgroundColor = 'rgba(0,0,0,0.8)'
+        navigationBar.style.backgroundColor = "black"
+    }
 });
 
 

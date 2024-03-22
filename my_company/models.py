@@ -7,6 +7,24 @@ from django.contrib.auth.models import User
 import os
 
 # Create your models here.
+
+class Career(models.Model):
+    title = models.CharField(max_length = 100)
+    job_description = models.TextField()
+    timestamp = models.DateTimeField(auto_now_add = True)
+
+    def serialize(self):
+        return{
+            "id":self.id,
+            "title":self.title,
+            "job_description":self.job_description,
+        }
+
+
+class CareerProfie(models.Model):
+    user = models.OneToOneField(User,on_delete = models.CASCADE)
+    applied_careers = models.ManyToManyField(Career , default = None,related_name = "careers")
+
 class Position(models.Model):
     name = models.CharField(max_length=100)
 
@@ -45,9 +63,9 @@ class Employee(models.Model):
     address = models.TextField()
     contact_number = models.CharField(max_length = 20)
     hiring_date = models.DateTimeField(default = timezone.now)
+    hired = models.BooleanField(default = False)
     
 ##Migration still needed
-
 class Service(models.Model):
     title = models.CharField(max_length=100) 
     description = models.TextField()
@@ -72,15 +90,14 @@ def delete_service_image(sender, instance, **kwargs):
             os.remove(instance.image.path)
 
 
-class Career(models.Model):
-    title = models.CharField(max_length = 100)
-    job_description = models.TextField()
-    timestamp = models.DateTimeField(auto_now_add = True)
+class Job_application_form(models.Model):
+    job_applier = models.OneToOneField(User,on_delete = models.CASCADE , related_name = "applier")
+    position = models.CharField(max_length = 100)
+    expected_salary = models.DecimalField(max_digits = 10, decimal_places = 2)
+    contact_number = models.CharField(max_length = 20)
+    cover_letter = models.TextField()
+    apply_date = models.DateTimeField(default = timezone.now)
+    hire = models.BooleanField(default = False)
+    reject = models.BooleanField(default = False)
 
-    def serialize(self):
-        return{
-            "id":self.id,
-            "title":self.title,
-            "job_description":self.job_description,
-        }
-
+                                                                                                                                                                                                                            
