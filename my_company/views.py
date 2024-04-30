@@ -226,21 +226,29 @@ def apply_job(request,career_id):
 
 
 def job_application(request,career_id):
+    careers = Career.objects.order_by('-timestamp').all()
     career = Career.objects.get(pk = career_id)
     user = request.user
-    if user.is_staff:
+    if not Career.objects.filter(id = career_id).exists():
         return render(request,'my_company/career.html',{
-            "error":"This user cannot applied for the position!"
+            "error":"Career does not exists!"
         })
-
     else:
-        if request.method == "POST":
-            form = JobApplicationForm(request.POST)
-            if form.is_valid():
-                print('valid')
-                return render(request,'my_company/career.html',{
-                })
-            else:
-                print("invalid")
+        if user.is_staff:
+            return render(request,'my_company/career.html',{
+                "error":"This user cannot applied for the position!"
+            })
+
+        else:
+            if request.method == "POST":
+                form = JobApplicationForm(request.POST)
+                if form.is_valid():
+                    print("valid")
+                    form.save()
+                    return render(request,'my_company/career.html',{
+                        "careers":careers
+                    })
+                else:
+                    print("valid")
     
     return HttpResponseRedirect(reverse('career'))

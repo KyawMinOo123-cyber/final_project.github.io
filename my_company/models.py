@@ -91,13 +91,11 @@ def delete_service_image(sender, instance, **kwargs):
 
 
 class Job_application_form(models.Model):
-    job_applier = models.OneToOneField(User,on_delete = models.CASCADE , related_name = "applier")
+    job_applier = models.CharField( max_length = 25)
     position = models.CharField(max_length = 100)
     expected_salary = models.DecimalField(max_digits = 10, decimal_places = 2)
     contact_number = models.CharField(max_length = 20)
     cover_letter = models.TextField()
     apply_date = models.DateTimeField(default = timezone.now)
-    hire = models.BooleanField(default = False)
-    reject = models.BooleanField(default = False)
 
                                                                                                                                                                                                                             
