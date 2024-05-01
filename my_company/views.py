@@ -214,20 +214,25 @@ def update_description(request,description_id):
 
 def apply_job(request,career_id):
     user = request.user
-    if user.is_staff:
-        return render(request,'my_company/career.html',{
-            "error":"This user cannot apply for the position!"
+    if not Career.objects.filter(id = career_id).exists():
+         return render(request,'my_company/career.html',{
+            "error":"Career does not exists!"
         })
     else:
-        career = Career.objects.get(pk = career_id)
-        return render(request,"my_company/apply_job_form.html",{
-            "career":career
-        })
+        if user.is_staff:
+            return render(request,'my_company/career.html',{
+                "error":"This user cannot apply for the position!"
+            })
+        else:
+            career = Career.objects.get(pk = career_id)
+            return render(request,"my_company/apply_job_form.html",{
+                "career":career
+            })
 
 
 def job_application(request,career_id):
     careers = Career.objects.order_by('-timestamp').all()
-    career = Career.objects.get(pk = career_id)
+    #career = Career.objects.get(pk = career_id)
     user = request.user
     if not Career.objects.filter(id = career_id).exists():
         return render(request,'my_company/career.html',{
@@ -243,12 +248,21 @@ def job_application(request,career_id):
             if request.method == "POST":
                 form = JobApplicationForm(request.POST)
                 if form.is_valid():
-                    print("valid")
                     form.save()
                     return render(request,'my_company/career.html',{
                         "careers":careers
                     })
                 else:
-                    print("valid")
+                    return render(request,'my_company/career.html',{
+                        "error":"The form you're trying to submit is invalid!"
+                    })
     
     return HttpResponseRedirect(reverse('career'))
+
+
+#Job applications for Admin
+def job_applications(request):
+    all_job_applications = Job_application_form.objects.order_by('-apply_date').all()
+    return render(request,'my_company/all_applications.html',{
+        "all_job_applications":all_job_applications
+    })
