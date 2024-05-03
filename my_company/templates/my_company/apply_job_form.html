@@ -7,8 +7,8 @@
     <div class="d-flex justify-content-center p-3" id="job-apply-form">
         <form action=" {% url 'job_application' career.id %} " method="POST" class="col-6">
             {% csrf_token %}
-            <label class="text-light mt-3" for="job-applier">Name</label>
-            <input class="form-control" id="job-applier" name="job_applier" type="text" value="{{request.user}}" readonly>
+            <label class="text-light mt-3" for="job-applier">Full Name:</label>
+            <input class="form-control" id="job-applier" name="job_applier" type="text">
             <label class="text-light mt-3" for="job-position">Postition</label>
             <input class="form-control" type="text" id="job-position" name="position" required>
             <label class="text-light mt-3" for="salary">Expected Salary</label>

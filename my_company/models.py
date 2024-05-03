@@ -12,6 +12,7 @@ class Career(models.Model):
     title = models.CharField(max_length = 100)
     job_description = models.TextField()
     timestamp = models.DateTimeField(auto_now_add = True)
+    applied_users = models.ManyToManyField(User, related_name = "job_applications")
 
     def serialize(self):
         return{
@@ -97,5 +98,16 @@ class Job_application_form(models.Model):
     contact_number = models.CharField(max_length = 20)
     cover_letter = models.TextField()
     apply_date = models.DateTimeField(default = timezone.now)
+    timestamp = models.DateTimeField(auto_now_add = True,blank = True, null = True)
 
-                                                                                                                                                                                                                            
+    def serialize(self):
+        return{
+            "id":self.id,
+            "job_applier":self.job_applier,
+            "position":self.position,
+            "expected_salary":self.expected_salary,
+            "contact_number":self.contact_number,
+            "cover_letter":self.cover_letter,
+            "apply_date":self.apply_date,
+            "timestamp":self.timestamp
+        }                                                                                                                                

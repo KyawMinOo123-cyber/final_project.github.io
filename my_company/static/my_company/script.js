@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded',function(){
+document.addEventListener('DOMContentLoaded',function() {
     const servicePage = document.querySelector('#services_page')
     const backgroundDiv = document.querySelector('#background-div')
     const employeesPage = document.querySelector('#employee-title')
@@ -7,6 +7,8 @@ document.addEventListener('DOMContentLoaded',function(){
     const navigationBar = document.querySelector('#navigation-bar')
     const updateButton = document.querySelector('#updateBtn')
     const jobApplyForm = document.querySelector('#job-apply-form')
+    const allApplications = document.querySelector('#all-applications-div')
+    const body = document.getElementById('bodyId')
 
    if(servicePage){
     const serviceDiv = document.querySelector('#services-div')
@@ -102,7 +104,7 @@ document.addEventListener('DOMContentLoaded',function(){
         });
        });
     };
-   };
+}
 
    if(employeesPage){
     const managementBody = document.querySelector('#management-body')
@@ -217,6 +219,54 @@ document.addEventListener('DOMContentLoaded',function(){
         backgroundDiv.innerHTML = ''
         document.body.style.backgroundColor = 'rgba(0,0,0,0.8)'
         navigationBar.style.backgroundColor = "black"
+    }
+
+    if(allApplications){
+        backgroundDiv.innerHTML = ''
+        document.body.style.backgroundColor = `rgba(0,0,0,0.8)`
+
+        const allApplicationDiv = document.querySelectorAll('.all-applications')
+        if(allApplicationDiv){
+            allApplicationDiv.forEach(application => {
+                application.addEventListener('click' , function (){
+                    console.log(allApplications)
+                    allApplications.style = `
+                     display:none !important;
+                    `
+                    const id = this.getAttribute('data-application-id')
+                    fetch('new_application_info/'+id)
+                    .then(res=> res.json())
+                    .then(application => {
+                        const application_info_div = document.createElement('div')
+                        application_info_div.style = `
+                        display:block;
+                        padding:20px;
+                        `
+                        const card = document.createElement('div')
+                        card.innerHTML = `
+                        <div class="d-flex justify-content-center">
+                            <div class='card col-12 col-md-3'>
+                            <h5 class="text-center">Name: ${application.job_applier}</h5>
+                            <h5 class="text-center">Position: ${application.position}</h5>
+                            <h5 class="text-center">Expected Salary: ${application.expected_salary}</h5>
+                            <h5 class="text-center">Contact Number: ${application.contact_number}</h5>
+                            <h5 class="text-center">Cover Letter: ${application.cover_letter}</h5>
+                            <h5 class="text-center">Date Applied: ${application.timestamp}</h5>
+                            <div class="card-footer d-flex justify-content-between align-items-center"> 
+                                <button class="btn btn-primary">Interview</button>
+                                <button class="btn btn-danger">Reject</button>
+                            </div>
+                            </div>
+                        </div>
+                        `
+
+                        
+                        application_info_div.append(card)
+                        body.append(application_info_div)
+                    })
+                })
+            })
+        }
     }
 });
 

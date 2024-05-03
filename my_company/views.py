@@ -231,8 +231,7 @@ def apply_job(request,career_id):
 
 
 def job_application(request,career_id):
-    careers = Career.objects.order_by('-timestamp').all()
-    #career = Career.objects.get(pk = career_id)
+    career = Career.objects.get(pk = career_id)
     user = request.user
     if not Career.objects.filter(id = career_id).exists():
         return render(request,'my_company/career.html',{
@@ -249,6 +248,8 @@ def job_application(request,career_id):
                 form = JobApplicationForm(request.POST)
                 if form.is_valid():
                     form.save()
+                    career.applied_users.add(user)
+                    careers = Career.objects.order_by('-timestamp').all()
                     return render(request,'my_company/career.html',{
                         "careers":careers
                     })
@@ -266,3 +267,8 @@ def job_applications(request):
     return render(request,'my_company/all_applications.html',{
         "all_job_applications":all_job_applications
     })
+ 
+
+def new_application_info(request,application_id):
+    application = Job_application_form.objects.get(pk =  application_id)
+    return JsonResponse(application.serialize(), safe = False)

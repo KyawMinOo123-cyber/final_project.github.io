@@ -29,5 +29,6 @@ urlpatterns = [
     path('job_application/<int:career_id>',views.job_application, name = 'job_application'),
 
     #all job applications for admin
-    path('job_applications',views.job_applications,name = 'job_applications')
+    path('job_applications',views.job_applications,name = 'job_applications'),
+    path('new_application_info/<int:application_id>',views.new_application_info,name = 'new_application_info')
 ]
