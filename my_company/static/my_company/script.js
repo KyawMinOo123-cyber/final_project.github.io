@@ -221,48 +221,88 @@ document.addEventListener('DOMContentLoaded',function() {
         navigationBar.style.backgroundColor = "black"
     }
 
-    if(allApplications){
+    const application_info_div = document.createElement('div')
+    body.append(application_info_div)
+    application_info_div.style =`
+            display:none;
+        `
+
+    if(allApplications){ 
+
         backgroundDiv.innerHTML = ''
         document.body.style.backgroundColor = `rgba(0,0,0,0.8)`
 
         const allApplicationDiv = document.querySelectorAll('.all-applications')
+
         if(allApplicationDiv){
+
             allApplicationDiv.forEach(application => {
                 application.addEventListener('click' , function (){
-                    console.log(allApplications)
+                    
                     allApplications.style = `
                      display:none !important;
                     `
-                    const id = this.getAttribute('data-application-id')
-                    fetch('new_application_info/'+id)
-                    .then(res=> res.json())
-                    .then(application => {
-                        const application_info_div = document.createElement('div')
-                        application_info_div.style = `
+
+                    application_info_div.style = `
                         display:block;
                         padding:20px;
                         `
-                        const card = document.createElement('div')
-                        card.innerHTML = `
-                        <div class="d-flex justify-content-center">
-                            <div class='card col-12 col-md-3'>
-                            <h5 class="text-center">Name: ${application.job_applier}</h5>
-                            <h5 class="text-center">Position: ${application.position}</h5>
-                            <h5 class="text-center">Expected Salary: ${application.expected_salary}</h5>
-                            <h5 class="text-center">Contact Number: ${application.contact_number}</h5>
-                            <h5 class="text-center">Cover Letter: ${application.cover_letter}</h5>
-                            <h5 class="text-center">Date Applied: ${application.timestamp}</h5>
+
+                    const id = this.getAttribute('data-application-id')
+
+                    fetch('new_application_info/'+id)
+                    .then(res=> res.json())
+                    .then(application => {
+                        
+                        //const card = document.createElement('div')
+                        application_info_div.innerHTML = `
+                        <div class="d-flex justify-content-center">     
+                            <div class='card col-12 col-md-3 p-3'>
+                            <h5 class="text-start">Name: ${application.job_applier}</h5>
+                            <h5 class="text-start">Position: ${application.position}</h5>
+                            <h5 class="text-start">Expected Salary: ${application.expected_salary}</h5>
+                            <h5 class="text-start">Contact Number: ${application.contact_number}</h5>
+                            <h5 class="text-start">Cover Letter: ${application.cover_letter}</h5>
+                            <h5 class="text-start">Date Applied: ${application.timestamp}</h5>
                             <div class="card-footer d-flex justify-content-between align-items-center"> 
                                 <button class="btn btn-primary">Interview</button>
-                                <button class="btn btn-danger">Reject</button>
+                                <button id="reject${application.id}" data-reject-id=${application.id} class="btn btn-danger">Reject</button>
                             </div>
+                            <button class="back-button" class="rounded">Back</button>
                             </div>
                         </div>
                         `
-
                         
-                        application_info_div.append(card)
-                        body.append(application_info_div)
+                        const backButton = document.querySelector('.back-button')
+                            backButton.addEventListener('click',function(){
+                                application_info_div.style = `display:none !important;`
+                                allApplications.style = `display:flex !important;`
+                                allApplications.classList.add('p-5','border')
+                            })
+                        
+                        const rejectButton = document.getElementById(`reject${application.id}`)
+                        rejectButton.addEventListener('click',function(){
+                            const id = this.getAttribute('data-reject-id')
+                            fetch('rejected_application/'+id)
+                            .then(res => res.json())
+                            .then(data => {
+                                if(data.success){
+                                    console.log(data)
+                                    application_info_div.style = `display:none !important;`
+                                    allApplications.style = `display:flex !important;`
+                                    allApplications.classList.add('p-5','border')
+                                    window.location.reload()
+                                }
+                                else{
+                                    console.log(data)
+                                    const errorDiv = document.createElement('div')
+                                    errorDiv.innerHtml = `
+                                     <h3 class="text-center text-danger">${data.error}</h3>
+                                    `
+                                }
+                            })
+                        })
+                        
                     })
                 })
             })

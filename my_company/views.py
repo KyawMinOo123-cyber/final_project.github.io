@@ -272,3 +272,12 @@ def job_applications(request):
 def new_application_info(request,application_id):
     application = Job_application_form.objects.get(pk =  application_id)
     return JsonResponse(application.serialize(), safe = False)
+
+def reject_application(request,application_id):
+    user = request.user
+    rejectApplication = Job_application_form.objects.get(pk = application_id) 
+    if user.is_staff:
+        rejectApplication.delete()
+        return JsonResponse({"success":"Application deleted successfully"},status = 200)
+    else:
+        return JsonResponse({"error":"Permission Denied"}, status = 403)
