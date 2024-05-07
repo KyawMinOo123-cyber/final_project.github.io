@@ -12,9 +12,7 @@
                 New Applications
             </a>
 
-            <a class="btn btn-primary me-3 d-block mb-3" style="height: 38px;" data-bs-toggle="collapse" href="#interviewing-collapse" role="button" aria-expanded="false" aria-controls="collapseExample">
-                Interviewing
-            </a>
+            <div id="interviewing-div"></div>
 
         </div>
 
@@ -38,7 +36,11 @@
                     </div>
                 {% endfor %}
             </div>
+
+            <div class="collapse" id="interviewing-collapse">
+            </div>
         </div>
+
 
     </div>
 {% endblock %}

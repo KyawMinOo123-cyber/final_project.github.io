@@ -227,7 +227,22 @@ document.addEventListener('DOMContentLoaded',function() {
             display:none;
         `
 
+    const interviewingDiv = document.getElementById('interviewing-div')
+
+
     if(allApplications){ 
+        interviewingDiv.innerHTML = 
+        `
+            <a class="btn btn-primary me-3 d-block mb-3" style="height: 38px;" data-bs-toggle="collapse" href="#interviewing-collapse" role="button" aria-expanded="false" aria-controls="collapseExample">
+                Interviewing
+            </a>
+        `
+        //to show applications that are interviewing
+        const interviewCollapse = document.getElementById('interviewing-collapse')
+        interviewCollapse.innerHTML = 
+        `
+
+        `
 
         backgroundDiv.innerHTML = ''
         document.body.style.backgroundColor = `rgba(0,0,0,0.8)`
@@ -260,12 +275,12 @@ document.addEventListener('DOMContentLoaded',function() {
                             <div class='card col-12 col-md-3 p-3'>
                             <h5 class="text-start">Name: ${application.job_applier}</h5>
                             <h5 class="text-start">Position: ${application.position}</h5>
-                            <h5 class="text-start">Expected Salary: ${application.expected_salary}</h5>
+                            <h5 class="text-start">Expected Salary:<spam class="text-primary"> ${application.expected_salary}</spam></h5>
                             <h5 class="text-start">Contact Number: ${application.contact_number}</h5>
-                            <h5 class="text-start">Cover Letter: ${application.cover_letter}</h5>
+                            <h5 class="text-start">Cover Letter<br> ${application.cover_letter}</h5>
                             <h5 class="text-start">Date Applied: ${application.timestamp}</h5>
                             <div class="card-footer d-flex justify-content-between align-items-center"> 
-                                <button class="btn btn-primary">Interview</button>
+                                <button id="interview${application.id}" data-interview-id=${application.id} class="btn btn-primary">Interview</button>
                                 <button id="reject${application.id}" data-reject-id=${application.id} class="btn btn-danger">Reject</button>
                             </div>
                             <button class="back-button" class="rounded">Back</button>
@@ -302,6 +317,25 @@ document.addEventListener('DOMContentLoaded',function() {
                                 }
                             })
                         })
+
+                        //to add new applications to interview list
+                        const interviewButton = document.getElementById(`interview${application.id}`)
+                        interviewButton.addEventListener('click',function(){
+                            const id = this.getAttribute('data-interview-id')
+                            
+                            fetch('add_to_interview/'+id)
+                            .then(res => res.json())
+                            .then(data =>{
+                                console.log(data)
+                                application_info_div.style = `display:none !important;`
+                                allApplications.style = `display:flex !important;`
+                                allApplications.classList.add('p-5','border')
+                            })
+                            
+                        })
+
+
+
                         
                     })
                 })

@@ -31,5 +31,6 @@ urlpatterns = [
     #all job applications for admin
     path('job_applications',views.job_applications,name = 'job_applications'),
     path('new_application_info/<int:application_id>',views.new_application_info,name = 'new_application_info'),
-    path('rejected_application/<int:application_id>', views.reject_application, name = "rejected_application")
+    path('rejected_application/<int:application_id>', views.reject_application, name = "rejected_application"),
+    path('add_to_interview/<int:application_id>', views.add_to_interview , name = "add_to_interview")
 ]

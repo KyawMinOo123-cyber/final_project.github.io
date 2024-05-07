@@ -110,4 +110,9 @@ class Job_application_form(models.Model):
             "cover_letter":self.cover_letter,
             "apply_date":self.apply_date,
             "timestamp":self.timestamp
-        }                                                                                                                                
+        }     
+
+class Interviewing_form(models.Model):
+    interviewing = models.ManyToManyField(Job_application_form,related_name = "interview_forms")   
+     
+                                                                                                            

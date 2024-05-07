@@ -281,3 +281,15 @@ def reject_application(request,application_id):
         return JsonResponse({"success":"Application deleted successfully"},status = 200)
     else:
         return JsonResponse({"error":"Permission Denied"}, status = 403)
+
+
+def add_to_interview(request,application_id):
+    application = Job_application_form.objects.get(pk = application_id)    
+    if request.user.is_staff:
+        interviewing_form, created = Interviewing_form.objects.get_or_create(pk=1)
+        
+        interviewing_form.interviewing.add(application)
+        
+        return JsonResponse({"success": "Form successfully added to interviewing list!"})
+    else:
+        return JsonResponse({"error": "Only staff members are allowed to perform this action."})
