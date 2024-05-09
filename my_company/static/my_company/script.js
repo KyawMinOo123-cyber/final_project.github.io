@@ -227,22 +227,7 @@ document.addEventListener('DOMContentLoaded',function() {
             display:none;
         `
 
-    const interviewingDiv = document.getElementById('interviewing-div')
-
-
     if(allApplications){ 
-        interviewingDiv.innerHTML = 
-        `
-            <a class="btn btn-primary me-3 d-block mb-3" style="height: 38px;" data-bs-toggle="collapse" href="#interviewing-collapse" role="button" aria-expanded="false" aria-controls="collapseExample">
-                Interviewing
-            </a>
-        `
-        //to show applications that are interviewing
-        const interviewCollapse = document.getElementById('interviewing-collapse')
-        interviewCollapse.innerHTML = 
-        `
-
-        `
 
         backgroundDiv.innerHTML = ''
         document.body.style.backgroundColor = `rgba(0,0,0,0.8)`
@@ -268,8 +253,6 @@ document.addEventListener('DOMContentLoaded',function() {
                     fetch('new_application_info/'+id)
                     .then(res=> res.json())
                     .then(application => {
-                        
-                        //const card = document.createElement('div')
                         application_info_div.innerHTML = `
                         <div class="d-flex justify-content-center">     
                             <div class='card col-12 col-md-3 p-3'>
@@ -279,14 +262,27 @@ document.addEventListener('DOMContentLoaded',function() {
                             <h5 class="text-start">Contact Number: ${application.contact_number}</h5>
                             <h5 class="text-start">Cover Letter<br> ${application.cover_letter}</h5>
                             <h5 class="text-start">Date Applied: ${application.timestamp}</h5>
-                            <div class="card-footer d-flex justify-content-between align-items-center"> 
-                                <button id="interview${application.id}" data-interview-id=${application.id} class="btn btn-primary">Interview</button>
-                                <button id="reject${application.id}" data-reject-id=${application.id} class="btn btn-danger">Reject</button>
+                            <div id="footer" class="card-footer d-flex justify-content-between align-items-center"> 
                             </div>
                             <button class="back-button" class="rounded">Back</button>
                             </div>
                         </div>
                         `
+                        const footerDiv  = document.getElementById('footer')
+                        if(footerDiv){
+                            if(application.interview){
+                                footerDiv.innerHTML = `
+                                    <button class="btn btn-primary">Hire</button>
+                                    <button id="reject${application.id}" data-reject-id=${application.id} class="btn btn-danger">Reject</button>
+                                `
+                            }else{
+                                footerDiv.innerHTML = `
+                                    <button id="interview${application.id}" data-interview-id=${application.id} class="btn btn-primary">Interview</button>
+                                    <button id="reject${application.id}" data-reject-id=${application.id} class="btn btn-danger">Reject</button>
+                                `
+                            }
+                        }
+
                         
                         const backButton = document.querySelector('.back-button')
                             backButton.addEventListener('click',function(){
@@ -320,23 +316,22 @@ document.addEventListener('DOMContentLoaded',function() {
 
                         //to add new applications to interview list
                         const interviewButton = document.getElementById(`interview${application.id}`)
-                        interviewButton.addEventListener('click',function(){
-                            const id = this.getAttribute('data-interview-id')
-                            
-                            fetch('add_to_interview/'+id)
-                            .then(res => res.json())
-                            .then(data =>{
-                                console.log(data)
-                                application_info_div.style = `display:none !important;`
-                                allApplications.style = `display:flex !important;`
-                                allApplications.classList.add('p-5','border')
+                        if(interviewButton){
+                            interviewButton.addEventListener('click',function(){
+                                const id = this.getAttribute('data-interview-id')
+                                
+                                fetch('add_to_interview/'+id)
+                                .then(res => res.json())
+                                .then(data =>{
+                                    console.log(data)
+                                    application_info_div.style = `display:none !important;`
+                                    allApplications.style = `display:flex !important;`
+                                    allApplications.classList.add('p-5','border')
+                                    window.location.reload()
+                                }) 
                             })
-                            
-                        })
+                        }
 
-
-
-                        
                     })
                 })
             })

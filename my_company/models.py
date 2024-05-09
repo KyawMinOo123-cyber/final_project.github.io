@@ -14,13 +14,15 @@ class Career(models.Model):
     timestamp = models.DateTimeField(auto_now_add = True)
     applied_users = models.ManyToManyField(User, related_name = "job_applications")
 
-    def serialize(self):
-        return{
+    def serialize(self, applied = False):
+        data = {
             "id":self.id,
             "title":self.title,
             "job_description":self.job_description,
+            "applied":applied
         }
-
+        
+        return data
 
 class CareerProfie(models.Model):
     user = models.OneToOneField(User,on_delete = models.CASCADE)
@@ -99,6 +101,7 @@ class Job_application_form(models.Model):
     cover_letter = models.TextField()
     apply_date = models.DateTimeField(default = timezone.now)
     timestamp = models.DateTimeField(auto_now_add = True,blank = True, null = True)
+    interview = models.BooleanField(default = False)
 
     def serialize(self):
         return{
@@ -109,7 +112,8 @@ class Job_application_form(models.Model):
             "contact_number":self.contact_number,
             "cover_letter":self.cover_letter,
             "apply_date":self.apply_date,
-            "timestamp":self.timestamp
+            "timestamp":self.timestamp,
+            "interview":self.interview
         }     
 
 class Interviewing_form(models.Model):

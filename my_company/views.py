@@ -262,11 +262,29 @@ def job_application(request,career_id):
 
 
 #Job applications for Admin
+
+def add_to_interview(request,application_id):
+    application = Job_application_form.objects.get(pk = application_id)    
+    if request.user.is_staff:
+        application.interview = True
+        application.save()
+        return JsonResponse({"success": "Form successfully added to interviewing list!"})
+    else:
+        return JsonResponse({"error": "Only staff members are allowed to perform this action."})
+
 def job_applications(request):
-    all_job_applications = Job_application_form.objects.order_by('-apply_date').all()
-    return render(request,'my_company/all_applications.html',{
-        "all_job_applications":all_job_applications
-    })
+    new_applications = Job_application_form.objects.filter(interview = False)
+
+    if Job_application_form.objects.filter(interview = True).exists():
+        interviewing_applications = Job_application_form.objects.filter(interview = True)
+        return render(request,'my_company/all_applications.html',{
+            "new_applications" : new_applications,
+            "interviewing_applications": interviewing_applications
+        })
+    else:
+        return render(request,'my_company/all_applications.html',{
+            "new_applications" : new_applications
+        })
  
 
 def new_application_info(request,application_id):
@@ -283,13 +301,4 @@ def reject_application(request,application_id):
         return JsonResponse({"error":"Permission Denied"}, status = 403)
 
 
-def add_to_interview(request,application_id):
-    application = Job_application_form.objects.get(pk = application_id)    
-    if request.user.is_staff:
-        interviewing_form, created = Interviewing_form.objects.get_or_create(pk=1)
-        
-        interviewing_form.interviewing.add(application)
-        
-        return JsonResponse({"success": "Form successfully added to interviewing list!"})
-    else:
-        return JsonResponse({"error": "Only staff members are allowed to perform this action."})
+

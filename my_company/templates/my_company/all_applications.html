@@ -12,13 +12,15 @@
                 New Applications
             </a>
 
-            <div id="interviewing-div"></div>
+            <a class="btn btn-primary me-3 d-block mb-3" style="height: 38px;" data-bs-toggle="collapse" href="#interviewing-collapse" role="button" aria-expanded="false" aria-controls="collapseExample">
+                Interviewing
+            </a>
 
         </div>
 
         <div id="application-collapse-div" style="background-color: rgba(0,0,0,0.5); margin-left: 25% !important;">
             <div class="collapse" id="application-collapse">
-                {% for application in all_job_applications %}
+                {% for application in new_applications %}
                     <div class="card m-3 p-2 all-applications" data-application-id={{application.id}}>
                         <table style="border-collapse:collapse;">
                             <tr class="border-bottom">
@@ -38,9 +40,25 @@
             </div>
 
             <div class="collapse" id="interviewing-collapse">
+                {% for application in interviewing_applications %}
+                    <div class="card m-3 p-2 all-applications" data-application-id={{application.id}}>
+                        <table style="border-collapse:collapse;">
+                            <tr class="border-bottom">
+                                <th class="border-end p-2">Name</th>
+                                <th class="border-end p-2">Position</th>
+                                <th class="border-end p-2">Date</th>
+                            </tr>
+
+                            <tr>
+                                <td class="border-end p-2"> {{application.job_applier}} </td>
+                                <td class="border-end p-2"> {{application.position}} </td>
+                                <td class="border-end p-2"> {{application.timestamp}} </td>
+                            </tr>
+                        </table>
+                    </div>
+                {% endfor %} 
             </div>
         </div>
-
 
     </div>
 {% endblock %}
