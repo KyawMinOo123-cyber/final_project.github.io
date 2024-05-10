@@ -224,8 +224,13 @@ document.addEventListener('DOMContentLoaded',function() {
     const application_info_div = document.createElement('div')
     body.append(application_info_div)
     application_info_div.style =`
-            display:none;
-        `
+        display:none;
+    `
+    const newEmployeeForm = document.createElement('div')
+    body.append(newEmployeeForm)
+    newEmployeeForm.style  = `
+        display:none;
+    `
 
     if(allApplications){ 
 
@@ -272,7 +277,7 @@ document.addEventListener('DOMContentLoaded',function() {
                         if(footerDiv){
                             if(application.interview){
                                 footerDiv.innerHTML = `
-                                    <button class="btn btn-primary">Hire</button>
+                                    <button id="hire" data-hire-id=${application.id} class="btn btn-primary">Hire</button>
                                     <button id="reject${application.id}" data-reject-id=${application.id} class="btn btn-danger">Reject</button>
                                 `
                             }else{
@@ -283,6 +288,60 @@ document.addEventListener('DOMContentLoaded',function() {
                             }
                         }
 
+                        const hireButton = document.querySelector('#hire')
+                        if(hireButton){
+                            hireButton.addEventListener('click',function(){
+                                const id = this.getAttribute('data-hire-id')
+                                fetch('employee_hiring_form/'+id)
+                                .then(res => res.json())
+                                .then(application => {
+                                    console.log(application)
+                                    application_info_div.style = `
+                                        display:none;
+                                    `
+                                    
+                                    newEmployeeForm.innerHTML = `
+                                        <h3 class="text-center text-warning mb-2">New Employee Detail Form</h3>
+                                        <label class="text-light" for="applier_name">Name</label>
+                                        <input id="applier_name" name="career-title" class="form-control mb-3" type="text" value ="${application.job_applier}">
+
+                                        <label class="text-light" for="applier_position">Position</label>
+                                        <input id="applier_position" type="text" value="${application.position}" class="form-control">
+
+                                        <label class="text-light" for="applier_expected_salary">Salary</label>
+                                        <input id="applier_expected_salary" type="text" class="form-control">
+
+                                        <label class="text-light" for="applier_contact_number">Contact Number</label>
+                                        <input type="text" id="applier_contact_number" value="${application.contact_number}" class="form-control">
+
+                                        <label class="text-light" for="applier_gender">Gender</label>
+                                        <input type="text" id="applier_gender" class="form-control">
+
+                                        <label class="text-light" for="applier_department">Department</label>
+                                        <input type="text" id="applier_department" class="form-control">
+        
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <button class="btn btn-primary">OK</button> 
+                                            <button id="cancelButton" class="btn btn-danger">Cancel</a>
+                                        </div>
+                                    `
+
+                                    newEmployeeForm.style = `
+                                        display:block;
+                                        padding:50px;
+                                        height:100vh;
+                                        width:100vw;
+                                    `
+
+                                    const cancelButton = document.querySelector('#cancelButton')
+                                    if(cancelButton){
+                                        cancelButton.addEventListener('click',function(){
+                                            console.log('clicked')
+                                        })
+                                    }
+                                
+                                })
+                            })}
                         
                         const backButton = document.querySelector('.back-button')
                             backButton.addEventListener('click',function(){

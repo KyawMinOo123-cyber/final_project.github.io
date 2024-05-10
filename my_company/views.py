@@ -285,7 +285,7 @@ def job_applications(request):
         return render(request,'my_company/all_applications.html',{
             "new_applications" : new_applications
         })
- 
+
 
 def new_application_info(request,application_id):
     application = Job_application_form.objects.get(pk =  application_id)
@@ -299,6 +299,15 @@ def reject_application(request,application_id):
         return JsonResponse({"success":"Application deleted successfully"},status = 200)
     else:
         return JsonResponse({"error":"Permission Denied"}, status = 403)
+
+
+def employee_hiring_form(request,application_id):
+    user = request.user
+    if user.is_staff:
+        application = Job_application_form.objects.get(pk = application_id)
+        return JsonResponse(application.serialize(), safe=False)
+    else:
+        return JsonResponse({"error":"Only staff members can perform this action!"} , status = 403)
 
 
 

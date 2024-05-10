@@ -58,10 +58,10 @@ class Department(models.Model):
 
 class Employee(models.Model):
     user = models.OneToOneField(User, on_delete = models.CASCADE)
-    positions = models.ManyToManyField(Position, related_name = "employees" )
-    teams = models.ManyToManyField(Team , related_name = "employees")
-    genders = models.ManyToManyField(Gender , related_name = "employees")
-    departments = models.ManyToManyField(Department , related_name = "employees") 
+    positions = models.OneToOneField(Position, related_name = "employees" ,on_delete = models.CASCADE , null = True, blank = True )
+    team = models.OneToOneField(Team , related_name = "employees" ,on_delete = models.CASCADE , null = True, blank = True)
+    gender = models.OneToOneField(Gender , related_name = "employees" ,on_delete = models.CASCADE , null = True, blank = True)
+    department = models.OneToOneField(Department , related_name = "employees" ,on_delete = models.CASCADE , null = True, blank = True) 
     salary = models.DecimalField(max_digits = 10, decimal_places = 2)
     address = models.TextField()
     contact_number = models.CharField(max_length = 20)
