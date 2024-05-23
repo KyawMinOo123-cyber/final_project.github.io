@@ -245,18 +245,27 @@ def job_application(request,career_id):
 
         else:
             if request.method == "POST":
-                form = JobApplicationForm(request.POST)
-                if form.is_valid():
-                    form.save()
-                    career.applied_users.add(user)
-                    careers = Career.objects.order_by('-timestamp').all()
-                    return render(request,'my_company/career.html',{
-                        "careers":careers
-                    })
-                else:
-                    return render(request,'my_company/career.html',{
-                        "error":"The form you're trying to submit is invalid!"
-                    })
+                job_applier = request.POST.get('job_applier')
+                position = request.POST.get('position')
+                expected_salary = request.POST.get('expected_salary')
+                contact_number = request.POST.get('contact_number')
+                cover_letter = request.POST.get('cover_letter')
+                apply_date = request.POST.get('apply_date')
+
+                job_application = Job_application_form(
+                    applying_user=request.user,
+                    job_applier=job_applier,
+                    position=position,
+                    expected_salary=expected_salary,
+                    contact_number=contact_number,
+                    cover_letter=cover_letter,
+                    apply_date=apply_date
+                )
+                job_application.save()
+            else:
+                return render(request,'my_company/career.html',{
+                    "error":"The form you're trying to submit is invalid!"
+                })
     
     return HttpResponseRedirect(reverse('career'))
 

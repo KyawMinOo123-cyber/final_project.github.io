@@ -321,8 +321,8 @@ document.addEventListener('DOMContentLoaded',function() {
                                         <input type="text" id="applier_department" class="form-control">
         
                                         <div class="d-flex justify-content-between align-items-center">
-                                            <button class="btn btn-primary">OK</button> 
-                                            <button id="cancelButton" class="btn btn-danger">Cancel</a>
+                                            <button id="okButton" data-ok-id=${application.id} class="btn btn-primary">OK</button> 
+                                            <button id="cancelButton" class="btn btn-danger">Cancel</a> 
                                         </div>
                                     `
 
@@ -337,6 +337,8 @@ document.addEventListener('DOMContentLoaded',function() {
                                     if(cancelButton){
                                         cancelButton.addEventListener('click',function(){
                                             console.log('clicked')
+                                            newEmployeeForm.style = `display:none;`
+                                            application_info_div.style = `display:block;`
                                         })
                                     }
                                 

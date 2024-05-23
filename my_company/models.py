@@ -94,6 +94,7 @@ def delete_service_image(sender, instance, **kwargs):
 
 
 class Job_application_form(models.Model):
+    applying_user = models.OneToOneField(User,on_delete = models.CASCADE,blank = True, null = True)
     job_applier = models.CharField( max_length = 25)
     position = models.CharField(max_length = 100)
     expected_salary = models.DecimalField(max_digits = 10, decimal_places = 2)
