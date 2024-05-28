@@ -35,5 +35,8 @@ urlpatterns = [
     path('add_to_interview/<int:application_id>', views.add_to_interview , name = "add_to_interview"),
 
     #creating employee
-    path('employee_hiring_form/<int:application_id>', views.employee_hiring_form, name = "employee_hiring_form")
+    path('employee_hiring_form/<int:application_id>', views.employee_hiring_form, name = "employee_hiring_form"),
+
+    #for categroies
+    path('categories',views.categories, name = "categories"),
 ]

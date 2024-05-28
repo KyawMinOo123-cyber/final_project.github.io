@@ -1,0 +1,19 @@
+{% extends 'my_company/layout.html' %}
+{% block title %}
+Categories
+{% endblock %}
+{% block body %}
+
+<h1 id="all-categories" class="text-center text-primary">All Categories</h1>
+<div id="create-category" class="p-3">
+    <a class="btn btn-primary" data-bs-toggle="collapse" href="#create-category-button" role="button" aria-expanded="false" aria-controls="collapseExample">
+        Create New Category
+    </a>
+    <div class="collapse" id="create-category-button">
+        <div class="card card-body mt-3">
+          Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
+        </div>
+      </div>
+</div>
+
+{% endblock %}

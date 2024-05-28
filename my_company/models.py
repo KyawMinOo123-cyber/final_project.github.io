@@ -58,6 +58,7 @@ class Department(models.Model):
 
 class Employee(models.Model):
     user = models.OneToOneField(User, on_delete = models.CASCADE)
+    name = models.TextField(max_length = 20,blank = True, null = True)
     positions = models.OneToOneField(Position, related_name = "employees" ,on_delete = models.CASCADE , null = True, blank = True )
     team = models.OneToOneField(Team , related_name = "employees" ,on_delete = models.CASCADE , null = True, blank = True)
     gender = models.OneToOneField(Gender , related_name = "employees" ,on_delete = models.CASCADE , null = True, blank = True)

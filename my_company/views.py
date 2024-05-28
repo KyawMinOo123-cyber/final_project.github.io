@@ -320,3 +320,11 @@ def employee_hiring_form(request,application_id):
 
 
 
+def categories(request):
+    user = request.user
+    if user.is_staff:
+        return render(request,'my_company/categories.html')
+    else:
+        return JsonResponse({'error':"Only staff members can perform this action!"}, status = 403)
+
+

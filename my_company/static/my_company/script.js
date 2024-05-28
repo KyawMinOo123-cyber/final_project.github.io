@@ -303,25 +303,25 @@ document.addEventListener('DOMContentLoaded',function() {
                                     newEmployeeForm.innerHTML = `
                                         <h3 class="text-center text-warning mb-2">New Employee Detail Form</h3>
                                         <label class="text-light" for="applier_name">Name</label>
-                                        <input id="applier_name" name="career-title" class="form-control mb-3" type="text" value ="${application.job_applier}">
+                                        <input id="applier_name" name="career-title" class="form-control mb-3" type="text" value ="${application.job_applier}" required>
 
                                         <label class="text-light" for="applier_position">Position</label>
-                                        <input id="applier_position" type="text" value="${application.position}" class="form-control">
+                                        <input id="applier_position" type="text" value="${application.position}" class="form-control" required>
 
                                         <label class="text-light" for="applier_expected_salary">Salary</label>
-                                        <input id="applier_expected_salary" type="text" class="form-control">
+                                        <input id="applier_expected_salary" type="text" class="form-control" required>
 
                                         <label class="text-light" for="applier_contact_number">Contact Number</label>
-                                        <input type="text" id="applier_contact_number" value="${application.contact_number}" class="form-control">
+                                        <input type="text" id="applier_contact_number" value="${application.contact_number}" class="form-control" required>
 
                                         <label class="text-light" for="applier_gender">Gender</label>
-                                        <input type="text" id="applier_gender" class="form-control">
+                                        <input type="text" id="applier_gender" class="form-control" required>
 
                                         <label class="text-light" for="applier_department">Department</label>
-                                        <input type="text" id="applier_department" class="form-control">
+                                        <input type="text" id="applier_department" class="form-control" required>
         
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <button id="okButton" data-ok-id=${application.id} class="btn btn-primary">OK</button> 
+                                        <div class=" mt-3 d-flex justify-content-between align-items-center">
+                                            <button id="saveButton" data-save-id=${application.id} class="btn btn-primary">Save</button> 
                                             <button id="cancelButton" class="btn btn-danger">Cancel</a> 
                                         </div>
                                     `
@@ -339,6 +339,14 @@ document.addEventListener('DOMContentLoaded',function() {
                                             console.log('clicked')
                                             newEmployeeForm.style = `display:none;`
                                             application_info_div.style = `display:block;`
+                                        })
+                                    }
+
+                                    const saveButton = document.querySelector('#saveButton')
+                                    if(saveButton){
+                                        saveButton.addEventListener('click',function(){
+                                            const id = this.getAttribute('data-save-id')
+                                            console.log(id)
                                         })
                                     }
                                 
