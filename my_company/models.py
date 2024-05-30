@@ -28,41 +28,16 @@ class CareerProfie(models.Model):
     user = models.OneToOneField(User,on_delete = models.CASCADE)
     applied_careers = models.ManyToManyField(Career , default = None,related_name = "careers")
 
-class Position(models.Model):
-    name = models.CharField(max_length=100)
 
-    def __str__(self):
-        return f"Position: {self.name}"
-
-
-class Team(models.Model):
-    name = models.CharField(max_length = 10)
-
-    def __str__(self):
-        return f"Team: {self.name}"
-
-
-class Gender(models.Model):
-    name = models.CharField(max_length = 10)
-
-    def __str__(self):
-        return f"Gender: {self.name}"
-
-
-class Department(models.Model):
-    name = models.CharField(max_length = 20)
-
-    def __str__(self):
-        return f"Department: {self.name}"
 
 
 class Employee(models.Model):
     user = models.OneToOneField(User, on_delete = models.CASCADE)
     name = models.TextField(max_length = 20,blank = True, null = True)
-    positions = models.OneToOneField(Position, related_name = "employees" ,on_delete = models.CASCADE , null = True, blank = True )
-    team = models.OneToOneField(Team , related_name = "employees" ,on_delete = models.CASCADE , null = True, blank = True)
-    gender = models.OneToOneField(Gender , related_name = "employees" ,on_delete = models.CASCADE , null = True, blank = True)
-    department = models.OneToOneField(Department , related_name = "employees" ,on_delete = models.CASCADE , null = True, blank = True) 
+    positions = models.TextField(blank = True, null = True )
+    team = models.TextField( blank = True, null = True)
+    gender = models.TextField( blank = True, null = True)
+    department = models.TextField( blank = True, null = True) 
     salary = models.DecimalField(max_digits = 10, decimal_places = 2)
     address = models.TextField()
     contact_number = models.CharField(max_length = 20)
@@ -108,6 +83,7 @@ class Job_application_form(models.Model):
     def serialize(self):
         return{
             "id":self.id,
+            "applying_user":self.applying_user,
             "job_applier":self.job_applier,
             "position":self.position,
             "expected_salary":self.expected_salary,

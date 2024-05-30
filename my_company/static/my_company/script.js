@@ -297,13 +297,17 @@ document.addEventListener('DOMContentLoaded',function() {
                                 .then(application => {
                                     console.log(application)
                                     application_info_div.style = `
-                                        display:none;
+                                        display:none; 
                                     `
                                     
                                     newEmployeeForm.innerHTML = `
                                         <h3 class="text-center text-warning mb-2">New Employee Detail Form</h3>
+
+                                        <label class="text-light" for="apply_user"></label>
+                                        <input id="apply_user" name="user" class="form-control mb-3" type="text" value = "${application.applying_user}" required> 
+
                                         <label class="text-light" for="applier_name">Name</label>
-                                        <input id="applier_name" name="career-title" class="form-control mb-3" type="text" value ="${application.job_applier}" required>
+                                        <input id="applier_name" name="name" class="form-control mb-3" type="text" value ="${application.job_applier}" required>
 
                                         <label class="text-light" for="applier_position">Position</label>
                                         <input id="applier_position" type="text" value="${application.position}" class="form-control" required>
