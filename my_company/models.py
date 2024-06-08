@@ -83,7 +83,13 @@ class Job_application_form(models.Model):
     def serialize(self):
         return{
             "id":self.id,
-            "applying_user":self.applying_user,
+            "applying_user":{
+                "id": self.applying_user.id,
+                "username": self.applying_user.username,
+                "email": self.applying_user.email,
+                "first_name": self.applying_user.first_name,
+                "last_name": self.applying_user.last_name
+            } if self.applying_user else None,
             "job_applier":self.job_applier,
             "position":self.position,
             "expected_salary":self.expected_salary,
