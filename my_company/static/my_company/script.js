@@ -333,6 +333,7 @@ document.addEventListener('DOMContentLoaded',function() {
                                                 <br>
                                                 <input type="date" id="applier_hiring_date" class="form-control" name="hiring_date" required>
 
+                                                <input type="hidden" id="applier_hiring" name="hired" >   
 
                                                 <div class=" mt-3 d-flex justify-content-between align-items-center">
                                                     <button id="saveButton" data-save-id=${application.id} class="btn btn-primary">Save</button> 
@@ -362,12 +363,23 @@ document.addEventListener('DOMContentLoaded',function() {
 
                                     const saveButton = document.querySelector('#saveButton')
                                     if(saveButton){
-
-
+                                        const apply_user = document.getElementById('apply_user').value;
+                                        const applier_name = document.getElementById('applier_name').value;
+                                        const applier_position = document.getElementById('applier_position').value;
+                                        const applier_team = document.getElementById('applier_team').value;
+                                        const applier_gender = document.getElementById('applier_gender').value;
+                                        const applier_department = document.getElementById('applier_department').value;
+                                        const applier_salary = document.getElementById('applier_expected_salary').value;
+                                        const applier_address = document.getElementById('applier_address').value;
+                                        const applier_number = document.getElementById('applier_contact_number').value;
+                                        const applier_hire_date = document.getElementById('applier_hiring_date').value;
+                                        const applier_hiring = document.getElementById('applier_hiring')
 
                                         saveButton.addEventListener('click',function(){
                                             const id = this.getAttribute('data-save-id')
-                                            console.log(id)
+                                            applier_hiring.value = true;
+                                            const hired = applier_hiring.value;
+                                            
                                             fetch('/employee_info/'+id,{
                                                 method:"POST",
                                                 credentials:"same-origin",
@@ -376,7 +388,17 @@ document.addEventListener('DOMContentLoaded',function() {
                                                     'Content-Type':'application/json'
                                                 },
                                                 body:JSON.stringify({
-
+                                                    user:apply_user,
+                                                    name:applier_name,
+                                                    positions:applier_position,
+                                                    team:applier_team,
+                                                    gender:applier_gender,
+                                                    department:applier_department,
+                                                    salary:applier_salary,
+                                                    address:applier_address,
+                                                    contact_number:applier_number,
+                                                    hiring_date:applier_hire_date,
+                                                    hired:hired
                                                 })
                                             })
                                             .then()
