@@ -36,4 +36,5 @@ urlpatterns = [
 
     #creating employee
     path('employee_hiring_form/<int:application_id>', views.employee_hiring_form, name = "employee_hiring_form"),
+    path('employee_info/<int:application_id>', views.save_employee_info,name = "employee_info")
 ]

@@ -244,28 +244,33 @@ def job_application(request,career_id):
             })
 
         else:
-            if request.method == "POST":
-                job_applier = request.POST.get('job_applier')
-                position = request.POST.get('position')
-                expected_salary = request.POST.get('expected_salary')
-                contact_number = request.POST.get('contact_number')
-                cover_letter = request.POST.get('cover_letter')
-                apply_date = request.POST.get('apply_date')
+            if user.is_authenticated:
+                if request.method == "POST":
+                    job_applier = request.POST.get('job_applier')
+                    position = request.POST.get('position')
+                    expected_salary = request.POST.get('expected_salary')
+                    contact_number = request.POST.get('contact_number')
+                    cover_letter = request.POST.get('cover_letter')
+                    apply_date = request.POST.get('apply_date')
 
-                job_application = Job_application_form(
-                    applying_user=request.user,
-                    job_applier=job_applier,
-                    position=position,
-                    expected_salary=expected_salary,
-                    contact_number=contact_number,
-                    cover_letter=cover_letter,
-                    apply_date=apply_date
-                )
-                job_application.save()
+                    job_application = Job_application_form(
+                        applying_user=request.user,
+                        job_applier=job_applier,
+                        position=position,
+                        expected_salary=expected_salary,
+                        contact_number=contact_number,
+                        cover_letter=cover_letter,
+                        apply_date=apply_date
+                    )
+                    career.applied_users.add(request.user)
+                    job_application.save()
+                   
+                else:
+                    return render(request,'my_company/career.html',{
+                        "error":"The form you're trying to submit is invalid!"
+                    })
             else:
-                return render(request,'my_company/career.html',{
-                    "error":"The form you're trying to submit is invalid!"
-                })
+                return JsonResponse({"error":"You need to login first!"},status = 302)
     
     return HttpResponseRedirect(reverse('career'))
 
@@ -317,6 +322,18 @@ def employee_hiring_form(request,application_id):
         return JsonResponse(application.serialize(), safe=False)
     else:
         return JsonResponse({"error":"Only staff members can perform this action!"} , status = 403)
+    
+
+def save_employee_info(request,application_id):
+    user = request.user
+    if user.is_staff:
+        application = Job_application_form.objects.get(pk = application_id)
+        #application.delete()
+        if request.method == "POST":
+            data = json.loads(request.body)
+            
+    else:
+        return JsonResponse({"erro":"Only staff members can perform this action!"} , status=403)
 
 
 

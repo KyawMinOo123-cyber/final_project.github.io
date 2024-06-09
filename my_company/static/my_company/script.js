@@ -401,7 +401,8 @@ document.addEventListener('DOMContentLoaded',function() {
                                                     hired:hired
                                                 })
                                             })
-                                            .then()
+                                            .then(res => res.json())
+                                            .then(data => console.log(data))
 
 
                                         })

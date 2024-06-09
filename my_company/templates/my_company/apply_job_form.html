@@ -9,14 +9,19 @@
             {% csrf_token %}
             <label class="text-light mt-3" for="job-applier">Full Name:</label>
             <input class="form-control" id="job-applier" name="job_applier" type="text">
+
             <label class="text-light mt-3" for="job-position">Postition</label>
             <input class="form-control" type="text" id="job-position" name="position" required>
+
             <label class="text-light mt-3" for="salary">Expected Salary</label>
             <input class="form-control" type="number" id="salary" name="expected_salary" required>
+
             <label class="text-light mt-3" for="contact-number">Contact Number</label>
             <input class="form-control" type="number" id="contact-number" name="contact_number" required>
+
             <label class="text-light mt-3" for="cover-letter">Cover Letter</label> <br>
             <textarea name="cover_letter" id="cover-letter" cols="80" rows="8"></textarea> <br>
+            
             <label class="text-light mt-3" for="apply-date">Avaliable Date</label>
             <input class="form-control" type="date" id="apply-date" name="apply_date" required>
 
