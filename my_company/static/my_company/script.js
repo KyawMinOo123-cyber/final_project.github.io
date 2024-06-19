@@ -294,6 +294,7 @@ document.addEventListener('DOMContentLoaded',function() {
                                 .then(res => res.json())
                                 .then(application => {
                                     console.log(application)
+                                    console.log(application.applying_user)
                                     application_info_div.style = `
                                         display:none; 
                                     `
@@ -321,7 +322,7 @@ document.addEventListener('DOMContentLoaded',function() {
                                                 <input type="text" id="applier_department" name="department" class="form-control" required>
 
                                                 <label class="text-light" for="applier_expected_salary">Salary</label>
-                                                <input id="applier_expected_salary" name="salary" type="text" class="form-control" required>
+                                                <input id="applier_expected_salary" name="salary" type="number" class="form-control" required>
 
                                                 <label class="text-light" for="applier_address">Address</label>
                                                 <input type="text" class="form-control" id="applier_address" name="address" required>
@@ -373,13 +374,11 @@ document.addEventListener('DOMContentLoaded',function() {
                                         const applier_address = document.getElementById('applier_address').value;
                                         const applier_number = document.getElementById('applier_contact_number').value;
                                         const applier_hire_date = document.getElementById('applier_hiring_date').value;
-                                        const applier_hiring = document.getElementById('applier_hiring')
+
 
                                         saveButton.addEventListener('click',function(){
                                             const id = this.getAttribute('data-save-id')
-                                            applier_hiring.value = true;
-                                            const hired = applier_hiring.value;
-                                            
+                                                  
                                             fetch('/employee_info/'+id,{
                                                 method:"POST",
                                                 credentials:"same-origin",
@@ -388,17 +387,16 @@ document.addEventListener('DOMContentLoaded',function() {
                                                     'Content-Type':'application/json'
                                                 },
                                                 body:JSON.stringify({
-                                                    user:apply_user,
+                                                    applier:apply_user,
                                                     name:applier_name,
                                                     positions:applier_position,
                                                     team:applier_team,
                                                     gender:applier_gender,
                                                     department:applier_department,
-                                                    salary:applier_salary,
+                                                    salary:Number(applier_salary),
                                                     address:applier_address,
                                                     contact_number:applier_number,
                                                     hiring_date:applier_hire_date,
-                                                    hired:hired
                                                 })
                                             })
                                             .then(res => res.json())

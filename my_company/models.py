@@ -32,13 +32,13 @@ class CareerProfie(models.Model):
 
 
 class Employee(models.Model):
-    user = models.OneToOneField(User, on_delete = models.CASCADE)
+    applier = models.OneToOneField(User, on_delete = models.CASCADE)
     name = models.TextField(max_length = 20,blank = True, null = True)
     positions = models.TextField(blank = True, null = True )
     team = models.TextField( blank = True, null = True)
     gender = models.TextField( blank = True, null = True)
     department = models.TextField( blank = True, null = True) 
-    salary = models.DecimalField(max_digits = 10, decimal_places = 2)
+    salary = models.DecimalField(max_digits = 100, decimal_places = 2)
     address = models.TextField()
     contact_number = models.CharField(max_length = 20)
     hiring_date = models.DateTimeField(default = timezone.now)

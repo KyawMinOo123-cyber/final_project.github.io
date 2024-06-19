@@ -331,9 +331,47 @@ def save_employee_info(request,application_id):
         #application.delete()
         if request.method == "POST":
             data = json.loads(request.body)
-            
+
+            try:
+                applier = data.get("applier")
+                name = data.get("name")
+                positions = data.get('positions')
+                team = data.get('team')
+                gender = data.get("gender")
+                department = data.get("department")
+                salary = data.get("salary")
+                address = data.get("address")
+                contact_number = data.get('contact_number')
+                hiring_date = data.get('hiring_date')
+                
+
+                employee = Employee(
+                    applier = applier,
+                    name = name,
+                    positions = positions,
+                    team = team,
+                    gender = gender,
+                    department = department,
+                    salary = salary,
+                    address = address,
+                    contact_number = contact_number,
+                    hiring_date = hiring_date if hiring_date else timezone.now(),
+                    hired = True
+                )
+                
+                employee.save()
+                return JsonResponse({
+                'status': 'success',
+                'message': 'Employee data received and employee created successfully'
+                })
+
+            except User.DoesNotExist:
+                return JsonResponse({'status': 'error', 'message': 'User not found'}, status=404)
+
+        else:
+            return JsonResponse({"error":'Method not allowed'}, status = 405)   
     else:
-        return JsonResponse({"erro":"Only staff members can perform this action!"} , status=403)
+        return JsonResponse({"error":"Only staff members can perform this action!"} , status=403)
 
 
 
