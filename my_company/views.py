@@ -218,7 +218,7 @@ def apply_job(request,career_id):
          return render(request,'my_company/career.html',{
             "error":"Career does not exists!"
         })
-    else:
+    else: 
         if user.is_staff:
             return render(request,'my_company/career.html',{
                 "error":"This user cannot apply for the position!"

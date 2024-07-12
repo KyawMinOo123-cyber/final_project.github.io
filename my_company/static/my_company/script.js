@@ -304,7 +304,7 @@ document.addEventListener('DOMContentLoaded',function() {
                                             <div class="card card-body bg-dark col col-md-6">
                                                 <h3 class="text-center text-light mb-2">New Employee Detail Form</h3>
                                                 <label class="text-light" for="apply_user"></label>
-                                                <input id="apply_user" name="user" class="form-control mb-3" type="hidden" value = "${application.applying_user.username}" required> 
+                                                <input id="apply_user_id" name="user" class="form-control mb-3" type="hidden" value="${application.applying_user? application.applying_user.id : ''}" required> 
 
                                                 <label class="text-light" for="applier_name">Name</label>
                                                 <input id="applier_name" name="name" class="form-control mb-3" type="text" value ="${application.job_applier}" required>
@@ -364,7 +364,7 @@ document.addEventListener('DOMContentLoaded',function() {
 
                                     const saveButton = document.querySelector('#saveButton')
                                     if(saveButton){
-                                        const apply_user = document.getElementById('apply_user').value;
+                                        const apply_user_id = document.getElementById('apply_user').value;
                                         const applier_name = document.getElementById('applier_name').value;
                                         const applier_position = document.getElementById('applier_position').value;
                                         const applier_team = document.getElementById('applier_team').value;
@@ -387,7 +387,7 @@ document.addEventListener('DOMContentLoaded',function() {
                                                     'Content-Type':'application/json'
                                                 },
                                                 body:JSON.stringify({
-                                                    applier:apply_user,
+                                                    applier:apply_user_id,
                                                     name:applier_name,
                                                     positions:applier_position,
                                                     team:applier_team,
