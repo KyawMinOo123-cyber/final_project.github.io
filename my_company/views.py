@@ -333,7 +333,7 @@ def save_employee_info(request,application_id):
             data = json.loads(request.body)
 
             try:
-                applier = data.get("applier")
+                applier_id = data.get("applier_id")
                 name = data.get("name")
                 positions = data.get('positions')
                 team = data.get('team')
@@ -344,7 +344,7 @@ def save_employee_info(request,application_id):
                 contact_number = data.get('contact_number')
                 hiring_date = data.get('hiring_date')
                 
-
+                applier = User.objects.get(pk = applier_id)
                 employee = Employee(
                     applier = applier,
                     name = name,

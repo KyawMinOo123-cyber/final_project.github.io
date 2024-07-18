@@ -364,7 +364,7 @@ document.addEventListener('DOMContentLoaded',function() {
 
                                     const saveButton = document.querySelector('#saveButton')
                                     if(saveButton){
-                                        const apply_user_id = document.getElementById('apply_user').value;
+                                        const apply_user_id = document.getElementById('apply_user_id').value;
                                         const applier_name = document.getElementById('applier_name').value;
                                         const applier_position = document.getElementById('applier_position').value;
                                         const applier_team = document.getElementById('applier_team').value;
@@ -387,7 +387,7 @@ document.addEventListener('DOMContentLoaded',function() {
                                                     'Content-Type':'application/json'
                                                 },
                                                 body:JSON.stringify({
-                                                    applier:apply_user_id,
+                                                    applier_id:apply_user_id,
                                                     name:applier_name,
                                                     positions:applier_position,
                                                     team:applier_team,
