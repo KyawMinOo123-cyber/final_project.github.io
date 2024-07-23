@@ -300,41 +300,40 @@ document.addEventListener('DOMContentLoaded',function() {
                                     `
                                     
                                     newEmployeeForm.innerHTML = `
-                                        
                                             <div class="card card-body bg-dark col col-md-6">
                                                 <h3 class="text-center text-light mb-2">New Employee Detail Form</h3>
                                                 <label class="text-light" for="apply_user"></label>
-                                                <input id="apply_user_id" name="user" class="form-control mb-3" type="hidden" value="${application.applying_user? application.applying_user.id : ''}" required> 
+                                                <input id="apply_user_id" name="user" class="form-control mb-3" type="hidden" value="${application.applying_user? application.applying_user.id : ''}" required /> 
 
                                                 <label class="text-light" for="applier_name">Name</label>
-                                                <input id="applier_name" name="name" class="form-control mb-3" type="text" value ="${application.job_applier}" required>
+                                                <input id="applier_name" name="name" class="form-control mb-3" type="text" value ="${application.job_applier}" required />
 
                                                 <label class="text-light" for="applier_position">Position</label>
-                                                <input id="applier_position" type="text" value="${application.position}" class="form-control" required>
+                                                <input id="applier_position" type="text" value="${application.position}" class="form-control" required />
 
                                                 <label class="text-light" for="applier_team">Team</label>
-                                                <input id="applier_team" name="team" class="form-control" required>
+                                                <input id="applier_team" name="team" class="form-control" required />
 
                                                 <label class="text-light" for="applier_gender">Gender</label>
-                                                <input type="text" id="applier_gender" name="gender" class="form-control" required>
+                                                <input type="text" id="applier_gender" name="gender" class="form-control" required />
 
                                                 <label class="text-light" for="applier_department">Department</label>
-                                                <input type="text" id="applier_department" name="department" class="form-control" required>
+                                                <input type="text" id="applier_department" name="department" class="form-control" required />
 
                                                 <label class="text-light" for="applier_expected_salary">Salary</label>
-                                                <input id="applier_expected_salary" name="salary" type="number" class="form-control" required>
+                                                <input id="applier_expected_salary" name="salary" type="number" class="form-control" required />
 
                                                 <label class="text-light" for="applier_address">Address</label>
-                                                <input type="text" class="form-control" id="applier_address" name="address" required>
+                                                <input type="text" class="form-control" id="applier_address" name="address" required />
 
                                                 <label class="text-light" for="applier_contact_number">Contact Number</label>
-                                                <input type="text" name="contact_number" id="applier_contact_number" value="${application.contact_number}" class="form-control" required>
+                                                <input type="text" name="contact_number" id="applier_contact_number" value="${application.contact_number}" class="form-control" required />
 
                                                 <label class="text-light mt-3" for="applier_hiring_date" >Hiring Date</label>
                                                 <br>
-                                                <input type="date" id="applier_hiring_date" class="form-control" name="hiring_date" required>
+                                                <input type="date" id="applier_hiring_date" class="form-control" name="hiring_date" required />
 
-                                                <input type="hidden" id="applier_hiring" name="hired" >   
+                                                <input type="hidden" id="applier_hiring" name="hired" />   
 
                                                 <div class=" mt-3 d-flex justify-content-between align-items-center">
                                                     <button id="saveButton" data-save-id=${application.id} class="btn btn-primary">Save</button> 
@@ -349,10 +348,8 @@ document.addEventListener('DOMContentLoaded',function() {
                                         padding:50px;
                                         height:auto;
                                         width:100vw;
-
                                     `
                                     
-
                                     const cancelButton = document.querySelector('#cancelButton')
                                     if(cancelButton){
                                         cancelButton.addEventListener('click',function(){
@@ -363,21 +360,23 @@ document.addEventListener('DOMContentLoaded',function() {
                                     }
 
                                     const saveButton = document.querySelector('#saveButton')
+
                                     if(saveButton){
-                                        const apply_user_id = document.getElementById('apply_user_id').value;
-                                        const applier_name = document.getElementById('applier_name').value;
-                                        const applier_position = document.getElementById('applier_position').value;
-                                        const applier_team = document.getElementById('applier_team').value;
-                                        const applier_gender = document.getElementById('applier_gender').value;
-                                        const applier_department = document.getElementById('applier_department').value;
-                                        const applier_salary = document.getElementById('applier_expected_salary').value;
-                                        const applier_address = document.getElementById('applier_address').value;
-                                        const applier_number = document.getElementById('applier_contact_number').value;
-                                        const applier_hire_date = document.getElementById('applier_hiring_date').value;
-
-
                                         saveButton.addEventListener('click',function(){
+                                            const apply_user_id = document.getElementById('apply_user_id').value;
+                                            const applier_name = document.getElementById('applier_name').value;
+                                            const applier_position = document.getElementById('applier_position').value;
+                                            const applier_team = document.getElementById('applier_team').value;
+                                            const applier_gender = document.getElementById('applier_gender').value;
+                                            const applier_department = document.getElementById('applier_department').value;
+                                            const applier_salary = document.getElementById('applier_expected_salary').value;
+                                            const applier_address = document.getElementById('applier_address').value;
+                                            const applier_number = document.getElementById('applier_contact_number').value;
+                                            const applier_hire_date = document.getElementById('applier_hiring_date').value;
+                                            
                                             const id = this.getAttribute('data-save-id')
+
+                                            console.log(apply_user_id,applier_name,applier_position,applier_team,applier_gender,applier_department,applier_salary,applier_address,applier_number,applier_hire_date)
                                                   
                                             fetch('/employee_info/'+id,{
                                                 method:"POST",
@@ -400,8 +399,10 @@ document.addEventListener('DOMContentLoaded',function() {
                                                 })
                                             })
                                             .then(res => res.json())
-                                            .then(data => console.log(data))
-
+                                            .then(data => {
+                                                console.log(data.status, data.message)
+                                                
+                                            })
 
                                         })
                                     }

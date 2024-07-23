@@ -328,7 +328,7 @@ def save_employee_info(request,application_id):
     user = request.user
     if user.is_staff:
         application = Job_application_form.objects.get(pk = application_id)
-        #application.delete()
+
         if request.method == "POST":
             data = json.loads(request.body)
 
@@ -358,8 +358,9 @@ def save_employee_info(request,application_id):
                     hiring_date = hiring_date if hiring_date else timezone.now(),
                     hired = True
                 )
-                
+
                 employee.save()
+                application.delete()
                 return JsonResponse({
                 'status': 'success',
                 'message': 'Employee data received and employee created successfully'
@@ -369,9 +370,9 @@ def save_employee_info(request,application_id):
                 return JsonResponse({'status': 'error', 'message': 'User not found'}, status=404)
 
         else:
-            return JsonResponse({"error":'Method not allowed'}, status = 405)   
+            return JsonResponse({"error":'Method not allowed'}, status=405)
     else:
-        return JsonResponse({"error":"Only staff members can perform this action!"} , status=403)
+        return JsonResponse({"error":"Only staff members can perform this action!"}, status=403)
 
 
 
