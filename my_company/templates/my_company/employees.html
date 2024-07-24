@@ -6,8 +6,21 @@ Employees
 {% block body %}
     <h1 id="employee-title" class="text-center text-primary pt-3 pb-3">MANAGE EMPLOYEES</h1>
     <div id="management-body">
-        <div id="employee-lists">
-            <a class="btn btn-dark" href="#all-employees" role="button" aria-expanded="false" aria-controls="collapseExample" data-bs-toggle="collapse">
+        <div id="team" class="p-3">
+            <a class="btn btn-dark mb-3" href="#create-team" role="button" aria-expanded="false" aria-controls="collapseExample" data-bs-toggle="collapse">
+                Create Team
+            </a>
+            <div id="create-team" class="collapse card card-body">
+                <form action="{% url 'create_team' %}" method="post">
+                    {% csrf_token %}
+                    <label for="name"> <b>Name</b> </label>
+                    <input class="form-control mt-3 mb-3" id="name" type="text">
+                    <button class="btn btn-primary" type="submit">Create</button>
+                </form>
+            </div>
+        </div>
+        <div id="employee-lists" class="p-3">
+            <a class="btn btn-dark mb-3" href="#all-employees" role="button" aria-expanded="false" aria-controls="collapseExample" data-bs-toggle="collapse">
                 All Employees
             </a>
             <div id="all-employees" class="collapse card card-body">

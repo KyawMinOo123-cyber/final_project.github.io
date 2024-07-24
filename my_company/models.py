@@ -8,6 +8,9 @@ import os
 
 # Create your models here.
 
+class Team(models.Model):
+    name = models.CharField(max_length = 10)
+
 class Career(models.Model):
     title = models.CharField(max_length = 100)
     job_description = models.TextField()
@@ -21,15 +24,11 @@ class Career(models.Model):
             "job_description":self.job_description,
             "applied":applied
         }
-        
         return data
 
 class CareerProfie(models.Model):
     user = models.OneToOneField(User,on_delete = models.CASCADE)
     applied_careers = models.ManyToManyField(Career , default = None,related_name = "careers")
-
-
-
 
 class Employee(models.Model):
     applier = models.OneToOneField(User, on_delete = models.CASCADE)
@@ -46,7 +45,7 @@ class Employee(models.Model):
     
 ##Migration still needed
 class Service(models.Model):
-    title = models.CharField(max_length=100) 
+    title = models.CharField(max_length=100)
     description = models.TextField()
     image = models.ImageField(upload_to='service_images/')
     timestamp = models.DateTimeField(auto_now_add=True)

@@ -382,5 +382,21 @@ def save_employee_info(request,application_id):
         return JsonResponse({"error":"Only staff members can perform this action!"}, status=403)
 
 
+def create_team(request):
+    user = request.user
+    if user.is_staff:
+        if request.method == "POST":
+            name = request.POST.get('name')
+            if name and len(name) <= 10:
+                team = Team(name = name)
+                team.save()
+            else:
+                return HttpResponse("Invalid data", status=400)
+        return HttpResponseRedirect('/employees')
+    else:
+        return JsonResponse({'error':"Only staff members can perform this action!"})
+    
+
+
 
 
