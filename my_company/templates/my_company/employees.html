@@ -5,5 +5,35 @@ Employees
 
 {% block body %}
     <h1 id="employee-title" class="text-center text-primary pt-3 pb-3">MANAGE EMPLOYEES</h1>
-    <div id="management-body"></div>
+    <div id="management-body">
+        <div id="employee-lists">
+            <a class="btn btn-dark" href="#all-employees" role="button" aria-expanded="false" aria-controls="collapseExample" data-bs-toggle="collapse">
+                All Employees
+            </a>
+            <div id="all-employees" class="collapse card card-body">
+                <div class="row">
+                    {% for employee in employees %}
+                        <div class="card col col-md-6" style="padding-right:0 !important; padding-left:0 !important;">
+                            <div class="card-title text-center" style="margin-bottom: 0 !important;">
+                                <a class="btn btn-dark" style="width: 100%; border-bottom-left-radius: 0% !important; border-bottom-right-radius: 0% !important;" href="#{{employee.id}}" role="button" aria-expanded="false" aria-controls="collapseExample" data-bs-toggle="collapse">
+                                    <h4>Name: {{employee.name}}</h4>
+                                </a>
+                            </div>
+
+                            <div id="{{employee.id}}" class="collapse card-body">
+                                <h5><b>Position:</b> {{employee.positions}}</h5><hr>
+                                <h5><b>Team:</b> {{employee.team}} </h5><hr>
+                                <h5><b>Gender:</b> {{employee.gender}}</h5><hr> 
+                                <h5><b>Department:</b> {{employee.department}}</h5><hr>
+                                <h5><b>Salary:</b> {{employee.salary}}</h5><hr>
+                                <h5> <u><b>Address</b></u> <br> {{employee.address}}</h5><hr>
+                                <h5><b>Phone:</b> {{employee.contact_number}}</h5><hr>
+                                <h5><b>Hired At:</b> {{employee.hiring_date}}</h5>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

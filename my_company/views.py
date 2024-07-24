@@ -183,7 +183,14 @@ def create_career(request):
 
 
 def employees(request):
-    return render(request, 'my_company/employees.html')
+    user = request.user
+    if user.is_staff:
+        employees = Employee.objects.all()
+        return render(request, 'my_company/employees.html',{
+            "employees":employees
+        })
+    else:
+        return JsonResponse({"error":"Only Staff Members Can View This Page!"})
 
 def edit_career(request,career_id):
     user = request.user

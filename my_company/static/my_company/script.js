@@ -401,7 +401,7 @@ document.addEventListener('DOMContentLoaded',function() {
                                             .then(res => res.json())
                                             .then(data => {
                                                 console.log(data.status, data.message)
-                                                
+                                                window.location.href = "/employees"
                                             })
 
                                         })
