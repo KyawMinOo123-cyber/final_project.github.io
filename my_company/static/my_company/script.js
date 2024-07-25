@@ -231,6 +231,7 @@ document.addEventListener('DOMContentLoaded',function() {
     `
 
     if(allApplications){ 
+        const all_teams_div = document.getElementById('all_teams')
 
         backgroundDiv.innerHTML = ''
         document.body.style.backgroundColor = `rgba(0,0,0,0.8)`
@@ -289,7 +290,22 @@ document.addEventListener('DOMContentLoaded',function() {
                         const hireButton = document.querySelector('#hire')
                         if(hireButton){
                             hireButton.addEventListener('click',function(){
+
+                                fetch('/team_list')
+                                    .then(res =>res.json())
+                                    .then(data => {
+                                        console.log(data)
+                                        data.map(team =>{
+                                            
+                                        })
+                                    })
+                                
+                                all_teams_div.innerHTML = `
+                                    
+                                `
+
                                 const id = this.getAttribute('data-hire-id')
+
                                 fetch('employee_hiring_form/'+id)
                                 .then(res => res.json())
                                 .then(application => {

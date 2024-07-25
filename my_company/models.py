@@ -11,6 +11,12 @@ import os
 class Team(models.Model):
     name = models.CharField(max_length = 10)
 
+    def serialize(self):
+        return { 
+            "id":self.id,
+            "name":self.name
+            }
+
 class Career(models.Model):
     title = models.CharField(max_length = 100)
     job_description = models.TextField()

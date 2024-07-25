@@ -391,11 +391,20 @@ def create_team(request):
                 team = Team(name = name)
                 team.save()
             else:
-                return HttpResponse("Invalid data", status=400)
+                return JsonResponse({"error":"Invalid data"}, status=400)
         return HttpResponseRedirect('/employees')
     else:
-        return JsonResponse({'error':"Only staff members can perform this action!"})
+        return JsonResponse({'error':"Only staff members can perform this action!"},status = 403)
     
+
+def team_list(request):
+    user = request.user
+    if user.is_staff:
+        teams = Team.objects.all()
+        serialized_teams = [team.serialize() for team in teams]
+        return JsonResponse(serialized_teams,safe = False)
+    else:
+        return JsonResponse({"error":"Only staff members can perform this action!"}, status = 403)
 
 
 

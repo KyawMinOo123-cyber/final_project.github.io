@@ -39,5 +39,8 @@ urlpatterns = [
     path('employee_info/<int:application_id>', views.save_employee_info,name = "employee_info"),
 
     #create team
-    path('create_team',views.create_team,name="create_team")
+    path('create_team',views.create_team,name="create_team"),
+
+    #all Team Names
+    path('team_list',views.team_list,name = "team_list")
 ]
