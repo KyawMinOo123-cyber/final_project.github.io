@@ -407,5 +407,20 @@ def team_list(request):
         return JsonResponse({"error":"Only staff members can perform this action!"}, status = 403)
 
 
+def delete_team(request,team_id):
+    user = request.user
+    if user.is_staff:
+        if request.method == "POST":
+            data = json.loads(request.body)
+            teamID = data.get("id")
+
+            team_to_delete = Team.objects.get(pk = teamID)
+            team_to_delete.delete()
+            return JsonResponse({"Success":"Team deleted successfully!"})
+        else:
+            return JsonResponse({"error":'Method not allowed'}, status=405)
+    else:
+        return JsonResponse({"ERROR":"Only staff members can perform this action!"},status= 403)
+
 
 

@@ -14,7 +14,7 @@ Employees
                 </a>
                 <div id="all_teams"></div>
             </div>
-            <div id="create-team" class="collapse card card-body">
+            <div id="create-team" class="collapse card card-body border-primary">
                 <form action="{% url 'create_team' %}" method="post">
                     {% csrf_token %}
                     <label for="name"> <b>Name</b> </label>
@@ -28,12 +28,12 @@ Employees
             <a class="btn btn-dark mb-3" href="#all-employees" role="button" aria-expanded="false" aria-controls="collapseExample" data-bs-toggle="collapse">
                 All Employees
             </a>
-            <div id="all-employees" class="collapse card card-body">
+            <div id="all-employees" class="collapse card card-body border-primary">
                 <div class="row">
                     {% for employee in employees %}
                         <div class="card col col-md-6" style="padding-right:0 !important; padding-left:0 !important;">
                             <div class="card-title text-center" style="margin-bottom: 0 !important;">
-                                <a class="btn btn-dark" style="width: 100%; border-bottom-left-radius: 0% !important; border-bottom-right-radius: 0% !important;" href="#{{employee.id}}" role="button" aria-expanded="false" aria-controls="collapseExample" data-bs-toggle="collapse">
+                                <a class="btn btn-primary" style="width: 100%; border-bottom-left-radius: 0% !important; border-bottom-right-radius: 0% !important;" href="#{{employee.id}}" role="button" aria-expanded="false" aria-controls="collapseExample" data-bs-toggle="collapse">
                                     <h4>Name: {{employee.name}}</h4>
                                 </a>
                             </div>

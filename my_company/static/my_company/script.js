@@ -9,6 +9,10 @@ document.addEventListener('DOMContentLoaded',function() {
     const jobApplyForm = document.querySelector('#job-apply-form')
     const allApplications = document.querySelector('#all-applications-div')
     const body = document.getElementById('bodyId')
+    
+    const employee_page = document.getElementById('employee-title')
+
+    
  
    if(servicePage){
     const serviceDiv = document.querySelector('#services-div')
@@ -104,7 +108,7 @@ document.addEventListener('DOMContentLoaded',function() {
         });
        });
     };
-}
+    }
 
    if(employeesPage){
     const managementBody = document.querySelector('#management-body')
@@ -211,7 +215,7 @@ document.addEventListener('DOMContentLoaded',function() {
                 document.getElementById(id).value = data.updated_career.job_description
             })
         })
-       }
+    }
 
     if(jobApplyForm){
         backgroundDiv.innerHTML = ''
@@ -230,8 +234,8 @@ document.addEventListener('DOMContentLoaded',function() {
         display:none;
     `
 
-    if(allApplications){ 
-        const all_teams_div = document.getElementById('all_teams')
+    if(allApplications){
+        const Teams = [] 
 
         backgroundDiv.innerHTML = ''
         document.body.style.backgroundColor = `rgba(0,0,0,0.8)`
@@ -272,6 +276,7 @@ document.addEventListener('DOMContentLoaded',function() {
                             </div>
                         </div>
                         `
+
                         const footerDiv  = document.getElementById('footer')
                         if(footerDiv){
                             if(application.interview){
@@ -296,25 +301,19 @@ document.addEventListener('DOMContentLoaded',function() {
                                     .then(data => {
                                         console.log(data)
                                         data.map(team =>{
-                                            
+                                            Teams.push(team) //is for team section in new employee
                                         })
                                     })
                                 
-                                all_teams_div.innerHTML = `
-                                    
-                                `
-
                                 const id = this.getAttribute('data-hire-id')
 
                                 fetch('employee_hiring_form/'+id)
                                 .then(res => res.json())
                                 .then(application => {
-                                    console.log(application)
-                                    console.log(application.applying_user)
                                     application_info_div.style = `
                                         display:none; 
                                     `
-                                    
+                    
                                     newEmployeeForm.innerHTML = `
                                             <div class="card card-body bg-dark col col-md-6">
                                                 <h3 class="text-center text-light mb-2">New Employee Detail Form</h3>
@@ -478,6 +477,60 @@ document.addEventListener('DOMContentLoaded',function() {
                 })
             })
         }
+    }
+
+    if(employee_page){
+        const all_teams_div = document.getElementById('all_teams') //from body
+        const labelDiv = document.createElement('div')
+        labelDiv.innerHTML = "T E A M S"
+        labelDiv.classList.add('text-center')
+
+        all_teams_div.append(labelDiv)
+        
+
+        const allTeamsDiv = document.createElement('div')
+        allTeamsDiv.classList.add('all-teams','d-flex')
+
+        fetch('/team_list')
+        .then(res =>res.json())
+        .then(data => {
+            data.map(team =>{
+                const teamDiv = document.createElement('div')
+                teamDiv.id = team.id+`${team.name}`
+                teamDiv.classList.add(team.name , "p-1","bg-primary","text-light","ms-2","me-2")
+                teamDiv.innerHTML = team.name
+                teamDiv.style = `
+                cursor:pointer;
+                `
+                teamDiv.addEventListener('click',()=>{
+                    const userResponse = confirm(`Are You Sure You Want To Delete ${team.name} ?`)
+                    if(userResponse){
+                        fetch('delete_team/'+team.id,{
+                            method:"POST",
+                            credentials:"same-origin",
+                            headers:{
+                                'X-CSRFToken':getToken('csrftoken'),
+                                'Content-Type':'application/json'
+                            },
+                            body:JSON.stringify({
+                               "id":team.id
+                            })
+                        })
+                        .then(res => res.json())
+                        .then(data =>{
+                            alert(data.Success)
+                            window.location.reload()
+                        })
+                    }
+                    else return
+                        
+                })
+
+                allTeamsDiv.append(teamDiv)
+            })
+        })
+
+        all_teams_div.append(allTeamsDiv)
     }
 });
 
