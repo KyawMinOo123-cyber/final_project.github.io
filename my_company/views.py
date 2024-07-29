@@ -350,28 +350,34 @@ def save_employee_info(request,application_id):
                 address = data.get("address")
                 contact_number = data.get('contact_number')
                 hiring_date = data.get('hiring_date')
-                
-                applier = User.objects.get(pk = applier_id)
-                employee = Employee(
-                    applier = applier,
-                    name = name,
-                    positions = positions,
-                    team = team,
-                    gender = gender,
-                    department = department,
-                    salary = salary,
-                    address = address,
-                    contact_number = contact_number,
-                    hiring_date = hiring_date if hiring_date else timezone.now(),
-                    hired = True
-                )
 
-                employee.save()
-                application.delete()
-                return JsonResponse({
-                'status': 'success',
-                'message': 'Employee data received and employee created successfully'
-                })
+                all_teams = Team.objects.all()
+                team_names = [team_obj.name.lower() for team_obj in all_teams]
+
+                if team.lower() not in team_names:
+                    return JsonResponse({'error': "Please provide a team that's already existing!"}, status=400)
+                else:
+                    applier = User.objects.get(pk = applier_id)
+                    employee = Employee(
+                        applier = applier,
+                        name = name,
+                        positions = positions,
+                        team = team,
+                        gender = gender,
+                        department = department,
+                        salary = salary,
+                        address = address,
+                        contact_number = contact_number,
+                        hiring_date = hiring_date if hiring_date else timezone.now(),
+                        hired = True
+                    )
+
+                    employee.save()
+                    application.delete()
+                    return JsonResponse({
+                    'status': 'success',
+                    'message': 'Employee data received and employee created successfully'
+                    })
 
             except User.DoesNotExist:
                 return JsonResponse({'status': 'error', 'message': 'User not found'}, status=404)

@@ -235,7 +235,7 @@ document.addEventListener('DOMContentLoaded',function() {
     `
 
     if(allApplications){
-        const Teams = [] 
+        const Teams = []
 
         backgroundDiv.innerHTML = ''
         document.body.style.backgroundColor = `rgba(0,0,0,0.8)`
@@ -263,7 +263,7 @@ document.addEventListener('DOMContentLoaded',function() {
                     .then(application => {
                         application_info_div.innerHTML = `
                         <div class="d-flex justify-content-center">     
-                            <div class='card col-12 col-md-3 p-3'>
+                            <div class='card col-12 col-md-8 p-3'>
                             <h5 class="text-start">Name: ${application.job_applier}</h5>
                             <h5 class="text-start">Position: ${application.position}</h5>
                             <h5 class="text-start">Expected Salary:<spam class="text-primary"> ${application.expected_salary}</spam></h5>
@@ -301,7 +301,7 @@ document.addEventListener('DOMContentLoaded',function() {
                                     .then(data => {
                                         console.log(data)
                                         data.map(team =>{
-                                            Teams.push(team) //is for team section in new employee
+                                            Teams.push(team) //is for team selection in new employee
                                         })
                                     })
                                 
@@ -388,11 +388,9 @@ document.addEventListener('DOMContentLoaded',function() {
                                             const applier_address = document.getElementById('applier_address').value;
                                             const applier_number = document.getElementById('applier_contact_number').value;
                                             const applier_hire_date = document.getElementById('applier_hiring_date').value;
-                                            
-                                            const id = this.getAttribute('data-save-id')
 
-                                            console.log(apply_user_id,applier_name,applier_position,applier_team,applier_gender,applier_department,applier_salary,applier_address,applier_number,applier_hire_date)
-                                                  
+                                            const id = this.getAttribute('data-save-id')
+                                                               
                                             fetch('/employee_info/'+id,{
                                                 method:"POST",
                                                 credentials:"same-origin",
@@ -415,8 +413,14 @@ document.addEventListener('DOMContentLoaded',function() {
                                             })
                                             .then(res => res.json())
                                             .then(data => {
-                                                console.log(data.status, data.message)
-                                                window.location.href = "/employees"
+                                                if(data.error){
+                                                    alert("Please Enter The Team That is already Exists!")
+                                                    return
+                                                }
+                                                else{
+                                                    console.log(data.status, data.message)
+                                                    window.location.href = "/employees"
+                                                }
                                             })
 
                                         })
@@ -439,7 +443,6 @@ document.addEventListener('DOMContentLoaded',function() {
                             .then(res => res.json())
                             .then(data => {
                                 if(data.success){
-                                    console.log(data)
                                     application_info_div.style = `display:none !important;`
                                     allApplications.style = `display:flex !important;`
                                     allApplications.classList.add('p-5','border')
@@ -500,7 +503,7 @@ document.addEventListener('DOMContentLoaded',function() {
                 teamDiv.classList.add(team.name , "p-1","bg-primary","text-light","ms-2","me-2")
                 teamDiv.innerHTML = team.name
                 teamDiv.style = `
-                cursor:pointer;
+                    cursor:pointer;
                 `
                 teamDiv.addEventListener('click',()=>{
                     const userResponse = confirm(`Are You Sure You Want To Delete ${team.name} ?`)
