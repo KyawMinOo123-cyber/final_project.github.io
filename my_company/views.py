@@ -429,4 +429,14 @@ def delete_team(request,team_id):
         return JsonResponse({"ERROR":"Only staff members can perform this action!"},status= 403)
 
 
+def edit_employee(request,employee_id):
+    user = request.user
+    if user.is_staff:
+        employee = Employee.objects.get(pk = employee_id)
+        return JsonResponse(employee.serialize(), safe = False)
+    else:
+        JsonResponse({"error":"Only staff members can perform this action!"}, status = 403)
+
+
+
 

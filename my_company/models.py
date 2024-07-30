@@ -48,6 +48,28 @@ class Employee(models.Model):
     contact_number = models.CharField(max_length = 20)
     hiring_date = models.DateTimeField(default = timezone.now)
     hired = models.BooleanField(default = False)
+
+    def serialize(self):
+        return{
+            "id":self.id,
+            "applier":{
+                "id":self.applier.id,
+                "username":self.applier.username,
+                "email":self.applier.email,
+                "first_name":self.applier.first_name,
+                "last_name":self.applier.last_name
+            },
+            "name":self.name,
+            "position":self.positions,
+            "team":self.team,
+            "gender":self.gender,
+            "department":self.department,
+            "salary":self.salary,
+            "address":self.address,
+            "contact_number":self.contact_number,
+            "hiring_date":self.hiring_date,
+            "hired":self.hired
+        }
     
 ##Migration still needed
 class Service(models.Model):

@@ -47,6 +47,9 @@ Employees
                                 <h5> <u><b>Address</b></u> <br> {{employee.address}}</h5><hr>
                                 <h5><b>Phone:</b> {{employee.contact_number}}</h5><hr>
                                 <h5><b>Hired At:</b> {{employee.hiring_date}}</h5>
+                                <div class="float-md-end">
+                                    <button class="edit_employee_button btn btn-danger" id={{employee.id}} data-editEmployee-id={{employee.id}} class="btn btn-danger">Edit</button>
+                                </div>
                             </div>
                         </div>
                     {% endfor %}

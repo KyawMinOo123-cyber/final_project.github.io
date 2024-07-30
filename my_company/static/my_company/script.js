@@ -483,6 +483,99 @@ document.addEventListener('DOMContentLoaded',function() {
     }
 
     if(employee_page){
+        const managementBody = document.querySelector('#management-body')
+        const teamDiv = document.getElementById('team')
+        const employeeDiv = document.getElementById('employee-lists')
+        const employeeEditDiv = document.createElement('div')
+        employeeEditDiv.classList.add('employee-edit-div','d-flex','justify-content-center')
+        managementBody.append(employeeEditDiv)
+        employeeEditDiv.style.display = "none"
+        
+
+
+        const employeeEditButtons = document.querySelectorAll('.edit_employee_button')
+        if(employeeEditButtons){
+            employeeEditButtons.forEach(button =>{
+                button.addEventListener('click',function(){
+                    const id = this.getAttribute('data-editEmployee-id')
+                    fetch('edit_employee/'+id,{
+                        method:"POST",
+                        credentials:"same-origin",
+                        headers:{
+                            "X-CSRFToken":getToken("csrftoken"),
+                            "Content-Type":"application/json"
+                        },
+                        body:JSON.stringify({
+                                "id":id
+                            })
+                    })
+                    .then(res=>res.json())
+                    .then(data =>{
+                        console.log(data)
+                        teamDiv.style.display = "none"
+                        employeeDiv.style.display = "none"
+                        employeeEditDiv.style = `
+                            display:block !important;
+                        `
+                        employeeEditDiv.innerHTML = `
+                            <div class="col-md-8 p-3">
+                                <div class="card-title bg-dark text-center d-flex justify-content-between p-2 rounded"> 
+                                    <h4 class="text-light">Edit Employee</h4>
+                                    <button id="cancel_edit_button" class="btn btn-warning">Cancel</button>
+                                </div>
+                                <form class="card-body" method="post" action="#" >
+                                    <label for="name">Name</label>
+                                    <input type="text" id="name" class="form-control" value="${data.name}" readonly>
+
+                                    <label for="position">Position</label>
+                                    <input type="text" id="position" class="form-control" value="${data.position}">
+
+                                    <label for="team">Team</label>
+                                    <input type="text" id="team" class="form-control" value="${data.team}">
+
+                                    <label for="gender" >Gender</label>
+                                    <input type="text" id="gender" class="form-control" value="${data.gender}" readonly>
+
+                                    <label for="department">Department</label>
+                                    <input type="text" id="department" class="form-control" value="${data.department}">
+
+                                    <label for="salary">Salary</label>
+                                    <input type="text" id="salary" class="form-control" value="${data.salary}">
+
+                                    <label for="address">Address</label>
+                                    <input type="text" id="address" class="form-control" value="${data.address}">
+
+                                    <label for="contactNumber">Contact Number</label>
+                                    <input type="text" id="contactNumber" class="form-control" value="${data.contact_number}">
+
+                                    <div class="card-footer d-flex justify-content-between mt-2">
+                                        <button class="btn btn-primary" type="submit">Update</button>
+                                        <a class="btn btn-danger" href="#">Fire</a>
+                                    </div>
+                                </form>
+                            </div>
+                        `
+
+                        const cancelEditButton = document.getElementById('cancel_edit_button')
+                        if(cancelEditButton){
+                            cancelEditButton.addEventListener('click',()=>{
+                                teamDiv.style = `
+                                    display:block !important;
+                                `
+                                employeeDiv.style = `
+                                    display:block !important;
+                                `
+                                employeeEditDiv.style = `
+                                    display:none !important;
+                                `
+
+                            })
+                        }
+                    })
+                })
+            })
+        }
+        
         const all_teams_div = document.getElementById('all_teams') //from body
         const labelDiv = document.createElement('div')
         labelDiv.innerHTML = "T E A M S"
@@ -498,6 +591,7 @@ document.addEventListener('DOMContentLoaded',function() {
         .then(res =>res.json())
         .then(data => {
             data.map(team =>{
+
                 const teamDiv = document.createElement('div')
                 teamDiv.id = team.id+`${team.name}`
                 teamDiv.classList.add(team.name , "p-1","bg-primary","text-light","ms-2","me-2")
@@ -526,7 +620,6 @@ document.addEventListener('DOMContentLoaded',function() {
                         })
                     }
                     else return
-                        
                 })
 
                 allTeamsDiv.append(teamDiv)
@@ -534,6 +627,7 @@ document.addEventListener('DOMContentLoaded',function() {
         })
 
         all_teams_div.append(allTeamsDiv)
+
     }
 });
 
