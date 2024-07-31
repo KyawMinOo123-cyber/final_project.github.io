@@ -47,5 +47,11 @@ urlpatterns = [
     path('delete_team/<int:team_id>',views.delete_team,name = "delete_team"),
 
     #edit_employee, for this place i can simply create a route that return all employee detail and i can get each employee using that id
-    path('edit_employee/<int:employee_id>',views.edit_employee,name = "edit_employee")
+    path('edit_employee/<int:employee_id>',views.edit_employee,name = "edit_employee"),
+
+    #firing an employee
+    path('fire_employee/<int:employee_id>',views.fire_employee,name = "fire_employee"),
+
+    #update employee
+    path('update_employee/<int:employee_id>',views.update_employee,name="update_employee")
 ]

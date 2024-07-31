@@ -490,8 +490,6 @@ document.addEventListener('DOMContentLoaded',function() {
         employeeEditDiv.classList.add('employee-edit-div','d-flex','justify-content-center')
         managementBody.append(employeeEditDiv)
         employeeEditDiv.style.display = "none"
-        
-
 
         const employeeEditButtons = document.querySelectorAll('.edit_employee_button')
         if(employeeEditButtons){
@@ -523,7 +521,7 @@ document.addEventListener('DOMContentLoaded',function() {
                                     <h4 class="text-light">Edit Employee</h4>
                                     <button id="cancel_edit_button" class="btn btn-warning">Cancel</button>
                                 </div>
-                                <form class="card-body" method="post" action="#" >
+                                <div class="card-body">
                                     <label for="name">Name</label>
                                     <input type="text" id="name" class="form-control" value="${data.name}" readonly>
 
@@ -549,12 +547,76 @@ document.addEventListener('DOMContentLoaded',function() {
                                     <input type="text" id="contactNumber" class="form-control" value="${data.contact_number}">
 
                                     <div class="card-footer d-flex justify-content-between mt-2">
-                                        <button class="btn btn-primary" type="submit">Update</button>
-                                        <a class="btn btn-danger" href="#">Fire</a>
+                                        <button class="btn btn-primary" id="update_button" data-update-id=${data.id}>Update</button>
+                                        <button class="btn btn-danger" id="fire_button" data-fire-id=${data.id} >Fire</button>
                                     </div>
-                                </form>
+                                </div>
+                                    
                             </div>
                         `
+
+                        const updateButton = document.getElementById('update_button')
+                        if(updateButton){
+                            updateButton.addEventListener('click',function(){
+                                const employeeID = this.getAttribute('data-update-id')
+                                const newPosition = document.getElementById('position').value
+                                const newTeam = document.getElementById('team').value
+                                const newDepartment = document.getElementById('department').value
+                                const newSalary = document.getElementById('salary').value
+                                const newAddress = document.getElementById('address').value
+                                const newContactNumber = document.getElementById('contactNumber').value
+
+                                fetch('update_employee/'+employeeID,{
+                                    method:"POST",
+                                    credentials:"same-origin",
+                                    headers:{
+                                        'X-CSRFToken':getToken('csrftoken'),
+                                        'Content-Type':'application/json'
+                                    },
+                                    body:JSON.stringify({
+                                        "id":employeeID,
+                                        "position":newPosition,
+                                        "team":newTeam,
+                                        "department":newDepartment,
+                                        "salary":newSalary,
+                                        "address":newAddress,
+                                        "contact_number":newContactNumber
+                                    })
+                                })
+                                .then(res => res.json())
+                                .then(data => {
+                                    if(data.success){
+                                        alert(data.success)
+                                        window.location.reload()
+                                    }
+                                })
+                            })
+                        }
+
+                        const fireButton = document.getElementById('fire_button')
+                        if(fireButton){
+                            fireButton.addEventListener('click',function(){
+                                const employee_id = this.getAttribute('data-fire-id')
+                                fetch('fire_employee/'+id,{
+                                    method:"POST",
+                                    credentials:"same-origin",
+                                    headers:{
+                                        'X-CSRFToken':getToken('csrftoken'),
+                                        'Content-Type':'application/json'
+                                    },
+                                    body:JSON.stringify({
+                                    "id":employee_id
+                                    })
+                                })
+                                .then(res => res.json())
+                                .then(data => {
+                                    if(data.success){
+                                        alert(data.success)
+                                        window.location.reload()
+                                    }
+                                })
+                            })
+                        }
 
                         const cancelEditButton = document.getElementById('cancel_edit_button')
                         if(cancelEditButton){
@@ -568,7 +630,6 @@ document.addEventListener('DOMContentLoaded',function() {
                                 employeeEditDiv.style = `
                                     display:none !important;
                                 `
-
                             })
                         }
                     })

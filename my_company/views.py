@@ -435,8 +435,51 @@ def edit_employee(request,employee_id):
         employee = Employee.objects.get(pk = employee_id)
         return JsonResponse(employee.serialize(), safe = False)
     else:
-        JsonResponse({"error":"Only staff members can perform this action!"}, status = 403)
+        return JsonResponse({"error":"Only staff members can perform this action!"}, status = 403)
 
+
+def fire_employee(request,employee_id):
+    user = request.user
+    if user.is_staff:
+        employee = Employee.objects.get(pk = employee_id)
+        employee_user = User.objects.get(pk = employee.applier.id)
+        employee_user.delete()
+        employee.delete()
+
+        return JsonResponse({"success":"Employee Fired Successfully!"})
+    else:
+        return JsonResponse({"error":"Only staff members can perform this action!"},status = 403)
+
+
+def update_employee(request,employee_id):
+    user = request.user
+    if user.is_staff:
+        employee = Employee.objects.get(pk = employee_id)
+        if request.method == "POST":
+            data = json.loads(request.body)
+
+            new_position = data.get('position')
+            new_team = data.get('team')
+            new_department = data.get('department')
+            new_salary = data.get('salary')
+            new_address = data.get('address')
+            new_number = data.get('contact_number')
+
+            employee.positions = new_position
+            employee.team = new_team
+            employee.department = new_department
+            employee.salary = new_salary
+            employee.address = new_address
+            employee.contact_number = new_number
+
+            employee.save()
+
+            return JsonResponse({"success":"Employee Details Updated Successfully!"})
+
+        else:
+            return JsonResponse({"error":"Method Not Allowed!"}, status = 405)
+    else:
+        return JsonResponse({"error":"Only staff members can perform this action"}, status = 403)
 
 
 
