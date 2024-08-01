@@ -130,4 +130,13 @@ class Job_application_form(models.Model):
 class Interviewing_form(models.Model):
     interviewing = models.ManyToManyField(Job_application_form,related_name = "interview_forms")   
      
+
+class Notification(models.Model):
+    user = models.ForeignKey(User, on_delete = models.CASCADE)
+    message = models.TextField(max_length = 200)
+    create_at = models.DateTimeField(auto_now_add = True)
+    is_read = models.BooleanField(default = False)
+
+    def __str__(self):
+        return f"Notification for {self.user.username}"
                                                                                                             

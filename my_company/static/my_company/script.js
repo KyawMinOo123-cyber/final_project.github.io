@@ -528,8 +528,8 @@ document.addEventListener('DOMContentLoaded',function() {
                                     <label for="position">Position</label>
                                     <input type="text" id="position" class="form-control" value="${data.position}">
 
-                                    <label for="team">Team</label>
-                                    <input type="text" id="team" class="form-control" value="${data.team}">
+                                    <label for="new_team">Team</label>
+                                    <input type="text" id="new_team" class="form-control" value="${data.team}">
 
                                     <label for="gender" >Gender</label>
                                     <input type="text" id="gender" class="form-control" value="${data.gender}" readonly>
@@ -560,7 +560,7 @@ document.addEventListener('DOMContentLoaded',function() {
                             updateButton.addEventListener('click',function(){
                                 const employeeID = this.getAttribute('data-update-id')
                                 const newPosition = document.getElementById('position').value
-                                const newTeam = document.getElementById('team').value
+                                const newTeam = document.getElementById('new_team').value
                                 const newDepartment = document.getElementById('department').value
                                 const newSalary = document.getElementById('salary').value
                                 const newAddress = document.getElementById('address').value
@@ -589,6 +589,11 @@ document.addEventListener('DOMContentLoaded',function() {
                                         alert(data.success)
                                         window.location.reload()
                                     }
+                                    if(data.error){
+                                        alert(data.error)
+                                        return
+                                    }
+                                    
                                 })
                             })
                         }

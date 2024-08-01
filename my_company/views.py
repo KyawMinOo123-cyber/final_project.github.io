@@ -13,7 +13,12 @@ import json
 
 
 def index(request):
-    return render(request,'my_company/index.html')
+    user = request.user
+    notifications = Notification.objects.filter(user = user, is_read = False)
+
+    return render(request,'my_company/index.html',{
+        "notification":notifications
+    })
 
 def register(request):
     if request.method == "POST":
@@ -443,7 +448,9 @@ def fire_employee(request,employee_id):
     if user.is_staff:
         employee = Employee.objects.get(pk = employee_id)
         employee_user = User.objects.get(pk = employee.applier.id)
-        employee_user.delete()
+        notification_message = "You Have Been Fired From Your Position!"
+        Notification.objects.create(user = employee_user,message = notification_message)
+
         employee.delete()
 
         return JsonResponse({"success":"Employee Fired Successfully!"})
@@ -465,17 +472,21 @@ def update_employee(request,employee_id):
             new_address = data.get('address')
             new_number = data.get('contact_number')
 
-            employee.positions = new_position
-            employee.team = new_team
-            employee.department = new_department
-            employee.salary = new_salary
-            employee.address = new_address
-            employee.contact_number = new_number
+            all_teams = Team.objects.all()
+            team_names = [team_obj.name.lower() for team_obj in all_teams]
 
-            employee.save()
+            if new_team.lower() not in team_names:
+                return JsonResponse({'error': "Please provide a team that's already existing!"}, status=400)
+            else:
+                employee.positions = new_position
+                employee.team = new_team
+                employee.department = new_department
+                employee.salary = new_salary
+                employee.address = new_address
+                employee.contact_number = new_number
 
-            return JsonResponse({"success":"Employee Details Updated Successfully!"})
-
+                employee.save()
+                return JsonResponse({"success":"Employee Details Updated Successfully!"})
         else:
             return JsonResponse({"error":"Method Not Allowed!"}, status = 405)
     else:

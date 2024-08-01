@@ -9,6 +9,10 @@
     {% if error %}
         <h1 class="text-center text-danger">{{error}}</h1>
     {% endif %}
+
+    {% if notification %}
+        <h1 class="text-center text-danger">{{notification}}</h1>
+    {% endif %}
     
     <div id="index-body">
         <img id="fs-logo" src="{% static 'logo.png' %}" alt="Focus Star">
