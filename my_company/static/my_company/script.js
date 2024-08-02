@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded',function() {
+    const homePage = document.getElementById('index-body')
     const servicePage = document.querySelector('#services_page')
     const backgroundDiv = document.querySelector('#background-div')
     const employeesPage = document.querySelector('#employee-title')
@@ -12,7 +13,40 @@ document.addEventListener('DOMContentLoaded',function() {
     
     const employee_page = document.getElementById('employee-title')
 
-    
+    if(homePage){
+        const notificationBar = document.getElementById('notification-bar')
+        const notificationButton = document.getElementById('x-button')
+        if(notificationButton){
+            notificationButton.addEventListener('click',function(){
+                const userID = this.getAttribute('data-user-id')
+                
+                console.log(userID)
+                fetch('fired_employee/'+userID,{
+                    method:"POST",
+                        credentials:"same-origin",
+                        headers:{
+                            "X-CSRFToken":getToken("csrftoken"),
+                            "Content-Type":"application/json"
+                        },
+                        body:JSON.stringify({
+                                "userID":userID
+                            })
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if(data.success){
+                        notificationBar.style = `display:none !important;`
+                        alert(data.success)
+                        return
+                    }
+                    if(data.error){
+                        alert(data.error)
+                        return
+                    }
+                })
+            })
+        }
+    }
  
    if(servicePage){
     const serviceDiv = document.querySelector('#services-div')
@@ -109,6 +143,7 @@ document.addEventListener('DOMContentLoaded',function() {
        });
     };
     }
+
 
    if(employeesPage){
     const managementBody = document.querySelector('#management-body')
@@ -216,6 +251,7 @@ document.addEventListener('DOMContentLoaded',function() {
             })
         })
     }
+
 
     if(jobApplyForm){
         backgroundDiv.innerHTML = ''

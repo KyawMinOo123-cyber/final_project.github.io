@@ -14,11 +14,17 @@ import json
 
 def index(request):
     user = request.user
-    notifications = Notification.objects.filter(user = user, is_read = False)
-
-    return render(request,'my_company/index.html',{
-        "notification":notifications
-    })
+    if user.is_authenticated:
+        if Notification.objects.filter(user = user, is_read = False).exists():
+            message = Notification.objects.filter(user = user, is_read = False).first().message
+            return render(request,'my_company/index.html',{
+                "message":message
+            })
+        else:
+            return render(request,'my_company/index.html')
+    else:
+        return render(request,'my_company/index.html')
+        
 
 def register(request):
     if request.method == "POST":
@@ -493,4 +499,16 @@ def update_employee(request,employee_id):
         return JsonResponse({"error":"Only staff members can perform this action"}, status = 403)
 
 
-
+def fired_employee(request,user_id):
+    user = request.user
+    if user.is_authenticated:
+        fired_user = User.objects.get(pk = user_id)
+        if user == fired_user:
+            notification = Notification.objects.filter(user = fired_user, is_read = False).first()
+            notification.is_read = True
+            notification.save()
+            return JsonResponse({"success":"Thanks you for your Time & Efforts!"})
+        else:
+            return JsonResponse({"error":"You are not allowed to do this function!"})
+    else:
+        return JsonResponse({"error":"Please Log In!"})

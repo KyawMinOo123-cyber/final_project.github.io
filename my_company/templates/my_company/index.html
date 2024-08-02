@@ -10,14 +10,17 @@
         <h1 class="text-center text-danger">{{error}}</h1>
     {% endif %}
 
-    {% if notification %}
-        <h1 class="text-center text-danger">{{notification}}</h1>
+    {% if message %}
+            <div class="d-flex justify-content-between p-3" id="notification-bar">
+                <h1 class="text-center text-danger">{{message}}</h1>
+                <button class="btn btn-warning" id="x-button" data-user-id={{request.user.id}} > X </button>
+            </div>
     {% endif %}
     
     <div id="index-body">
         <img id="fs-logo" src="{% static 'logo.png' %}" alt="Focus Star">
         <div id="header" class="border-bottom pb-2">
-            <h1 id="index-header" class="d-inline"><span id="it" class="text-light">IT</span> DEPARTMENT</h1>
+            <h1 id="index-header" class="d-inline"><span id="it" class="text-light">IT</span>DEPARTMENT</h1>
         </div>
     </div>
     
