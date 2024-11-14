@@ -107,6 +107,7 @@ p::selection{
         padding: 5px!important;
         background: none!important;
         border: none!important;
+        color: rgb(0, 255, 0) !important;
     }
 
     /* home */

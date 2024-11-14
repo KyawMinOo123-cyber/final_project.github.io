@@ -401,12 +401,17 @@ def save_employee_info(request,application_id):
 
 def create_team(request):
     user = request.user
+    
     if user.is_staff:
         if request.method == "POST":
             name = request.POST.get('name')
+
             if name and len(name) <= 10:
-                team = Team(name = name)
-                team.save()
+                if Team.objects.filter(name = name).exists():
+                    return HttpResponseRedirect('/employees')
+                else:
+                    team = Team(name = name)
+                    team.save()
             else:
                 return JsonResponse({"error":"Invalid data"}, status=400)
         return HttpResponseRedirect('/employees')
