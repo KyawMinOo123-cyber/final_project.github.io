@@ -15,7 +15,7 @@
         </div>
         <div class="collapse" id="collapseExample">
             <div id="form-div" class="d-flex justify-content-center p-3" style="background-color: rgba(0,0,0,0.8);">
-                <form method="POST" enctype="multipart/form-data" class="col-6 text-light" action="{% url 'create_service' %}">
+                <form method="POST" enctype="multipart/form-data" class="col-12 col-md-6 text-light" action="{% url 'create_service' %}">
                     {% csrf_token %}
                     <label for="id_title">Title:</label>
                     <input class="form-control" type="text" id="id_title" name="title" required><br>

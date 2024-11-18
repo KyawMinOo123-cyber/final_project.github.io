@@ -87,13 +87,24 @@ p::selection{
 
 /* responsive */
 @media only screen and (max-width:500px){
+    /* body */
+    #bodyId{
+        padding: 5px !important;
+    }
     /* navigation bar */
     #navigation-bar{
         display:block;
         font-size: 12px;
+        padding:3px !important;
     }
     #nav-buttons{
         margin-top: 10px;
+    }
+    #home-nav-btn, #career-nav-btn, #employee-nav-btn, #service-nav-btn, #application-nav-btn{
+        padding:3px !important;
+    }
+    #service-nav-btn{
+        text-align: center;
     }
     #username{
         border-radius: 10px!important;
@@ -157,4 +168,16 @@ p::selection{
         grid-template-columns: 1fr;
     }
 
+    /* all applications */
+    #all-applications-div{
+        display: block !important;
+    }
+    #application-collapse-div{
+        justify-content: center !important;
+        margin-left:0 !important;
+    }
+    /* About Page */
+    #first-para, #second-para{
+        font-size: 15px !important;
+    }
 }
