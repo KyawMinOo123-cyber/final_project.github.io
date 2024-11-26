@@ -58,6 +58,11 @@ p::selection{
     align-items: center;
 }
 
+#service-div-parent{
+    display: flex;
+    justify-content: center;
+}
+
 #services-div{
     display: grid;
     justify-content: center;
@@ -151,6 +156,9 @@ p::selection{
     }
 
     /* services */
+    #service-div-parent{
+        display: block;
+    }
     #services-div{
         grid-template-columns: 1fr;
         justify-content: center;
@@ -249,8 +257,9 @@ p::selection{
 
 /* services */
     #services-div{
-        grid-template-columns: 1fr;
-        justify-content: center;
+        gap: 0 !important;
+        grid-template-columns:1fr;
+        justify-content: center !important;
     }
 
     #service_body, #services-div{
@@ -265,10 +274,6 @@ p::selection{
 
     #company-group , #joint-group{
         grid-template-columns: 1fr;
-    }
-
-    #service-div-parent{
-        display: block !important;
     }
 
 /* all applications */

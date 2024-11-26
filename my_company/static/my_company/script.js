@@ -102,7 +102,7 @@ document.addEventListener('DOMContentLoaded',function() {
                 console.log(service)
                 const serviceDivParent = document.querySelector('#service-div-parent')
                 const newDiv = document.createElement('div')
-                newDiv.classList.add('card','col','col-md-8')
+                newDiv.classList.add('card','col-12','col-md-8')
 
                 serviceDiv.style = `display:none;`
                 
@@ -112,14 +112,21 @@ document.addEventListener('DOMContentLoaded',function() {
                     <div class="card-body" > ${service.description} </div>
                     <div class="card-footer" > <a class="btn btn-primary" id="back${service.id}" >Back</a> </div>
                 `
-               
+               if(window.innerWidth >= 500 || window.innerWidth <= 986){
+                    serviceDivParent.classList.remove('d-block')
+                    serviceDivParent.classList.add('row','d-flex','justify-content-center')
+               }else{
+                    serviceDivParent.classList.remove('d-flex',)
+                    serviceDivParent.classList.add('row','d-block')
+               }
+
                 serviceDivParent.append(newDiv)
                 
                 const backButton = document.querySelector(`#back${service.id}`)
                 if(backButton){
                     backButton.addEventListener('click',function(){
                         serviceDiv.removeAttribute('style')
-                        if(window.innerWidth <= 500){
+                        if(window.innerWidth <= 986){
                             serviceDiv.style = `
                             display: grid;
                             justify-content: center;
@@ -128,10 +135,8 @@ document.addEventListener('DOMContentLoaded',function() {
                             `
                         }else{
                             serviceDiv.style=`
-                            display: grid;
+                            display: flex;
                             justify-content: center;
-                            grid-template-columns: 1fr 1fr 1fr;
-                            gap: 100px;
                             `
                         }
                       
