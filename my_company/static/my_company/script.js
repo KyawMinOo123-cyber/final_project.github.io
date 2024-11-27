@@ -112,35 +112,16 @@ document.addEventListener('DOMContentLoaded',function() {
                     <div class="card-body" > ${service.description} </div>
                     <div class="card-footer" > <a class="btn btn-primary" id="back${service.id}" >Back</a> </div>
                 `
-               if(window.innerWidth >= 500 || window.innerWidth <= 986){
-                    serviceDivParent.classList.remove('d-block')
-                    serviceDivParent.classList.add('row','d-flex','justify-content-center')
-               }else{
-                    serviceDivParent.classList.remove('d-flex',)
-                    serviceDivParent.classList.add('row','d-block')
-               }
 
                 serviceDivParent.append(newDiv)
                 
                 const backButton = document.querySelector(`#back${service.id}`)
                 if(backButton){
                     backButton.addEventListener('click',function(){
-                        serviceDiv.removeAttribute('style')
-                        if(window.innerWidth <= 986){
-                            serviceDiv.style = `
-                            display: grid;
-                            justify-content: center;
-                            grid-template-columns: 1fr;
-                            gap: 100px;
-                            `
-                        }else{
-                            serviceDiv.style=`
-                            display: flex;
-                            justify-content: center;
-                            `
-                        }
-                      
+                        
+                        serviceDiv.style = `display:grid;`
                         serviceDivParent.removeChild(newDiv)
+
                     });
                 };
             });

@@ -257,9 +257,8 @@ p::selection{
 
 /* services */
     #services-div{
-        gap: 0 !important;
         grid-template-columns:1fr;
-        justify-content: center !important;
+        justify-content: center;
     }
 
     #service_body, #services-div{
@@ -356,6 +355,104 @@ p::selection{
     /* services */
     #services-div{
         grid-template-columns: 1fr;
+        justify-content: center;
+    }
+
+    #service_body, #services-div{
+        padding: 0!important;
+        margin: 0!important;
+    }
+
+    .cards{
+        width: 95%;
+        padding: 5px;
+    }
+
+    #company-group , #joint-group{
+        grid-template-columns: 1fr;
+    }
+
+    /* all applications */
+    #all-applications-div{
+        display: block !important;
+    }
+    #application-collapse-div{
+        justify-content: center !important;
+        margin-left:0 !important;
+    }
+    /* About Page */
+    #first-para, #second-para{
+        font-size: 15px !important;
+    }
+}
+
+
+@media only screen and (max-width:1114px) and (min-width:986px) {
+    /* body */
+    #bodyId{
+        padding:0 !important;
+    }
+    /* navigation bar */
+    #navigation-bar{
+        display:block;
+        font-size: 15px;
+        padding:0!important;
+    }
+    #nav-buttons{
+        margin-top: 10px;
+        justify-content: space-evenly!important;
+    }
+    #home-nav-btn, #career-nav-btn, #employee-nav-btn, #service-nav-btn, #application-nav-btn ,#about-nav-btn{
+        padding:3px !important;
+    }
+    #service-nav-btn{
+        text-align: center;
+    }
+    #username{
+        border-radius: 10px!important;
+        font-size: 12px!important;
+    }
+
+    .username{
+        padding: 5px!important;
+    }
+    #admin{
+        padding: 3px!important;
+        background: none!important;
+        border: none!important;
+        color: rgb(0, 255, 0) !important;
+    }
+
+    /* home */
+    #index-body{
+        display:block;
+    }
+
+    #index-header{
+        font-size: 30px;
+        color: black;
+    }
+    
+    #header{
+        display: flex;
+        justify-content: center;
+        background-color:rgba(0,0,0,0.8);
+    }
+    #index-body img{
+        max-width: 300px;
+    }
+    /* form */
+    #form-div{
+        padding: 0!important;
+    }
+
+    #description{
+        width: 100%;
+    }
+
+    /* services */
+    #services-div{
+        grid-template-columns:1fr 1fr;
         justify-content: center;
     }
 

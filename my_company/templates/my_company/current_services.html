@@ -31,9 +31,9 @@
     <div id="service_body" class="p-3">
         {% if services %}
             <div id="service-div-parent">
-                <div class="col-12 col-md-6" id="services-div">
+                <div class="col-12 col-md-8" id="services-div">
                     {% for service in services %}
-                    <div class="card cards">
+                    <div class="card cards col-12 col-md-8">
                         <div class="card-title p-2 d-flex justify-content-between">
                             {{service.title}}
                             <p class="btn btn-dark" data-info-id="{{service.id}}">i</p>
