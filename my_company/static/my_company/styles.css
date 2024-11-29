@@ -15,6 +15,12 @@ p::selection{
     width: 100vw;
     height: 100vh;
 }
+#grayBackground{
+    position: absolute;
+    z-index: -1;
+    width: 100vw;
+    height: 100vh;
+}
 
 #index-body{
     display: flex;

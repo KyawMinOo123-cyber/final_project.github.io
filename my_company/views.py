@@ -164,7 +164,7 @@ def create_service(request):
         else:
             form = ServiceForm()
             return render(request,'my_company/current_services.html',{
-                "form":form
+                "form":form 
             })
     else:
         return render(request,'my_company/current_services.html',{

@@ -1,4 +1,6 @@
 document.addEventListener('DOMContentLoaded',function() {
+    const backgroundImg = document.getElementById('background')
+    const grayBackground = document.getElementById('grayBackground')
     const homePage = document.getElementById('index-body')
     const servicePage = document.querySelector('#services_page')
     const backgroundDiv = document.querySelector('#background-div')
@@ -12,6 +14,16 @@ document.addEventListener('DOMContentLoaded',function() {
     const body = document.getElementById('bodyId')
     
     const employee_page = document.getElementById('employee-title')
+    
+    window.addEventListener('resize',function(){
+        if(window.innerWidth <= 500){
+            backgroundImg.style.display = "none"
+            grayBackground.style.display = "block"
+        }else{
+          grayBackground.style.display ="none"
+          backgroundImg.style.display = "block"
+        }
+    })
 
     if(homePage){
         const notificationBar = document.getElementById('notification-bar')
