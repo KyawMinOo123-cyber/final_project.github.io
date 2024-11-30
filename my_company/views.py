@@ -10,8 +10,6 @@ from django.utils import timezone
 import json
 # Create your views here.
 
-
-
 def index(request):
     user = request.user
     if user.is_authenticated:
@@ -142,8 +140,8 @@ def delete_career(request,career_id):
             career.delete()
         else:
              return render(request,'my_company/career.html',{
-            "error":"Permission Denied!!"
-        })
+                "error":"Permission Denied!!"
+            })
         
     else:
         return render(request,'my_company/career.html',{
@@ -161,6 +159,10 @@ def create_service(request):
             if form.is_valid():
                 form.save()
                 return HttpResponseRedirect(reverse('current_services'))
+            else:
+                return render(request,'my_company/current_services.html',{
+                    "error":"Form Is Not Valid!"
+                })
         else:
             form = ServiceForm()
             return render(request,'my_company/current_services.html',{

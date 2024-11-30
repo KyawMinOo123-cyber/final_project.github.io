@@ -8,6 +8,9 @@
 {% block body %}
     {% if error %}
         <h1 class="text-center text-danger">{{error}}</h1>
+        <div class="d-flex justify-content-center">
+            <a href="{% url 'index' %}" class="btn btn-warning">Go Back</a>
+        </div>
     {% endif %}
 
     {% if message %}

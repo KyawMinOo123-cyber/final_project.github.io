@@ -4,6 +4,14 @@ Employees
 {% endblock %}
 
 {% block body %}
+
+    {% if error %}
+        <h1 class="text-center text-danger" >{% error %}</h1>
+        <div class="d-flex justify-content-center">
+            <a href="{% url 'employees' %}" class="btn btn-warning">Go Back</a>
+        </div>
+    {% endif %}
+
     <h1 id="employee-title" class="text-center text-primary pt-3 pb-3 border-bottom">MANAGE EMPLOYEES</h1>
     <div id="management-body">
 

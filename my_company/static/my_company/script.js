@@ -15,17 +15,18 @@ document.addEventListener('DOMContentLoaded',function() {
     
     const employee_page = document.getElementById('employee-title')
     
-    window.addEventListener('resize',function(){
-        if(window.innerWidth <= 500){
-            backgroundImg.style.display = "none"
-            grayBackground.style.display = "block"
-        }else{
-          grayBackground.style.display ="none"
-          backgroundImg.style.display = "block"
-        }
-    })
 
     if(homePage){
+        window.addEventListener('resize',function(){
+            if(window.innerWidth <= 500){
+                backgroundImg.style.display = "none"
+                grayBackground.style.display = "block"
+            }else{
+              grayBackground.style.display ="none"
+              backgroundImg.style.display = "block"
+            }
+        })
+    
         const notificationBar = document.getElementById('notification-bar')
         const notificationButton = document.getElementById('x-button')
         if(notificationButton){

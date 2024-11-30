@@ -5,6 +5,14 @@
 {% endblock %}
 
 {% block body %}
+
+    {%if error%}
+        <h1 class="text-center text-danger"> Error Form is Not Valid! </h1>
+        <div class="d-flex justify-content-center">
+            <a href="{% url 'current_services' %}" class="btn btn-warning">Go Back</a>
+        </div>
+    {%endif%}
+
     {% csrf_token %}
     <h1 id="services_page" class="text-center text-warning" style="text-shadow: 1px 1px 1px rgba(0,0,0,0.5);background-color: rgba(0,0,0,0.5);clip-path: polygon(0 0, 100% 0, 76% 100%, 24% 100%);padding:5px;">Current Services</h1>
     {% if user.is_staff %}
@@ -28,6 +36,7 @@
             </div>
         </div>
     {% endif %}
+
     <div id="service_body" class="p-3">
         {% if services %}
             <div id="service-div-parent">

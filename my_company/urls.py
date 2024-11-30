@@ -56,5 +56,6 @@ urlpatterns = [
     path('update_employee/<int:employee_id>',views.update_employee,name="update_employee"),
 
     #fired_employee
-    path('fired_employee/<int:user_id>',views.fired_employee, name = "fired_employee")
+    path('fired_employee/<int:user_id>',views.fired_employee, name = "fired_employee"),
+    
 ]
