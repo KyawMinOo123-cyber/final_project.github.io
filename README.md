@@ -1,5 +1,5 @@
 Usage guide
-you will need to install code editor and python first
+you will need to install code editor(Like VS Code) and python first
 open command and use the steps below vVv
 
 1. first clone the github repo>>
